@@ -1,14 +1,4 @@
-fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
-    use qrcode::render::svg;
-    use qrcode::QrCode;
-
-    let code = QrCode::new(code)?;
-    let qr = code
-        .render()
-        .min_dimensions(200, 200)
-        .dark_color(svg::Color("#000000"))
-        .light_color(svg::Color("#ffffff"))
-        .build();
+fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
     {
         let tag_end = qr.find('>').ok_or("could not find end tag")?;
         let svg_header = &qr[..tag_end];
@@ -27,6 +17,18 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
     let qr = regex::Regex::new(r#"width="\d+""#)?
         .replace(&qr, r#"width="51mm" x="1mm""#);
     Ok(qr.to_string())
+}
+
+fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
+    use qrcode::render::svg;
+    use qrcode::QrCode;
+
+    fix_svg_header(QrCode::new(code)?
+        .render()
+        .min_dimensions(200, 200)
+        .dark_color(svg::Color("#000000"))
+        .light_color(svg::Color("#ffffff"))
+        .build())
 }
 
 /// Certificate code to SVG converter.
