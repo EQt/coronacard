@@ -77,7 +77,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .as_ref()
         .map(|c| c.trim_start_matches("QR-Code:"))
         .unwrap_or(include_str!("../data/code"));
-    let cert = greenpass::parse(&code)?;
+    let cert = greenpass::parse(code)?;
     let pass = cert.passes.last().ok_or("no greenpass found")?;
     let birth = &pass.date_of_birth;
     let name = format!("{}, {}", pass.surname, pass.givenname);
@@ -98,7 +98,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         } else {
             include_str!("../data/template.svg").to_string()
         };
-        vac.to_svg(&mut templ, &gen_qr_code(&code)?);
+        vac.to_svg(&mut templ, &gen_qr_code(code)?);
         std::fs::write(&args.out, &templ)?;
         eprintln!(" => {}", &args.out);
     }
