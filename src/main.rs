@@ -68,6 +68,23 @@ struct Args {
     no_show: bool,
 }
 
+fn parse(code: &str) -> Result<Vacc, Box<dyn std::error::Error>> {
+    let cert = greenpass::parse(code)?;
+    let pass = cert.passes.last().ok_or("no greenpass found")?;
+    let birth = &pass.date_of_birth;
+    let name = format!("{}, {}", pass.surname, pass.givenname);
+    match pass.entries.last().ok_or("no vaccine entries found")? {
+        greenpass::CertInfo::Recovery(_) => todo!(),
+        greenpass::CertInfo::Test(_) => todo!(),
+        greenpass::CertInfo::Vaccine(vac) => Ok(Vacc {
+            name,
+            dose: format!("{}/{}", &vac.dose_number, vac.dose_total),
+            last: format!("{}", &vac.date),
+            birth: birth.to_owned(),
+        }),
+    }
+ }
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
@@ -77,20 +94,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .as_ref()
         .map(|c| c.trim_start_matches("QR-Code:"))
         .unwrap_or(include_str!("../data/code"));
-    let cert = greenpass::parse(code)?;
-    let pass = cert.passes.last().ok_or("no greenpass found")?;
-    let birth = &pass.date_of_birth;
-    let name = format!("{}, {}", pass.surname, pass.givenname);
-    let vac = match pass.entries.last().ok_or("no vaccine entries found")? {
-        greenpass::CertInfo::Recovery(_) => todo!(),
-        greenpass::CertInfo::Test(_) => todo!(),
-        greenpass::CertInfo::Vaccine(vac) => Vacc {
-            name,
-            dose: format!("{}/{}", &vac.dose_number, vac.dose_total),
-            last: format!("{}", &vac.date),
-            birth: birth.to_owned(),
-        },
-    };
+    let vac = parse(code)?;
     eprint!("{vac:#?}");
     {
         let mut templ = if let Some(t) = &args.template {

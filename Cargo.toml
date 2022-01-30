@@ -6,6 +6,7 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+bardecoder = "0.3.0"
 clap = { version = "3.0.13", features = ["derive"] }
 greenpass = "0.2.0"
 qrcode = "0.12.0"
