@@ -11,9 +11,19 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
        .build())
 }
 
+/// Certificate code to SVG converter.
+#[derive(clap::Parser)]
+#[clap(author, about)]
+struct Args {
+    #[clap(short, long, default_value_t = include_str!("../code").to_string())]
+    code: String,
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let code = include_str!("../code");
-    let cert = greenpass::parse(&code)?;
+    use clap::Parser;
+
+    let args = Args::parse();
+    let cert = greenpass::parse(&args.code)?;
     let pass = cert.passes.last().ok_or("no greenpass found")?;
     let birth = &pass.date_of_birth;
     let name = format!("{}, {}", pass.surname, pass.givenname);
@@ -26,6 +36,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             dbg!(&birth, &name, &dose, &vac.date);
         }
     }
-    std::fs::write("v.svg", gen_qr_code(code)?)?;
+    std::fs::write("v.svg", gen_qr_code(&args.code)?)?;
     Ok(())
 }
