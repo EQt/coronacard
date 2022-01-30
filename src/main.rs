@@ -72,14 +72,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
     let args = Args::parse();
-    let code = args.code.unwrap_or(include_str!("../code").to_string());
+    let code = args
+        .code
+        .as_ref()
+        .map(|c| c.trim_start_matches("QR-Code:"))
+        .unwrap_or(include_str!("../data/code"));
     let cert = greenpass::parse(&code)?;
     let pass = cert.passes.last().ok_or("no greenpass found")?;
     let birth = &pass.date_of_birth;
     let name = format!("{}, {}", pass.surname, pass.givenname);
-    let vac = pass.entries.last().ok_or("no vaccine entries found")?;
-
-    let vac = match vac {
+    let vac = match pass.entries.last().ok_or("no vaccine entries found")? {
         greenpass::CertInfo::Recovery(_) => todo!(),
         greenpass::CertInfo::Test(_) => todo!(),
         greenpass::CertInfo::Vaccine(vac) => Vacc {
@@ -94,7 +96,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut templ = if let Some(t) = &args.template {
             std::fs::read_to_string(t)?
         } else {
-            include_str!("../template.svg").to_string()
+            include_str!("../data/template.svg").to_string()
         };
         vac.to_svg(&mut templ, &gen_qr_code(&code)?);
         std::fs::write(&args.out, &templ)?;
