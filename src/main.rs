@@ -28,6 +28,24 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
         .build())
 }
 
+#[derive(Debug)]
+struct Vacc {
+    name: String,
+    birth: String,
+    lastvacc: String,
+    dose: String,
+}
+
+impl Vacc {
+    fn to_svg(&self, templ: &mut String, inner: &str) {
+        *templ = templ.replace("@birth", &self.birth);
+        *templ = templ.replace("@name", &self.name);
+        *templ = templ.replace("@dose", &self.dose);
+        *templ = templ.replace("@lastvacc", &self.lastvacc);
+        *templ = templ.replace("<text>@inner</text>", inner);
+    }
+}
+
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
 #[clap(author, about)]
@@ -45,23 +63,6 @@ struct Args {
 
     #[clap(short, long)]
     no_show: bool,
-}
-
-#[derive(Debug)]
-struct Vacc {
-    name: String,
-    birth: String,
-    lastvacc: String,
-    dose: String,
-}
-
-impl Vacc {
-    fn to_svg(&self, templ: &mut String) {
-        *templ = templ.replace("@birth", &self.birth);
-        *templ = templ.replace("@name", &self.name);
-        *templ = templ.replace("@dose", &self.dose);
-        *templ = templ.replace("@lastvacc", &self.lastvacc);
-    }
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -87,9 +88,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     dbg!(&vac);
     {
         let mut templ = std::fs::read_to_string(&args.template)?;
-        vac.to_svg(&mut templ);
-        let card = gen_qr_code(&args.code)?;
-        templ = templ.replace("<text>@inner</text>", &card);
+        vac.to_svg(&mut templ, &gen_qr_code(&args.code)?);
         std::fs::write(&args.out, &templ)?;
     }
     Ok(())
