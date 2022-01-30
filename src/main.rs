@@ -12,7 +12,8 @@ fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
     let qr = qr
         .strip_prefix(r#"<?xml version="1.0" standalone="yes"?>"#)
         .ok_or("expected prefix not found")?;
-    Ok(qr.replace(r#"height="255""#, r#"height="51mm" y="1mm""#)
+    Ok(qr
+        .replace(r#"height="255""#, r#"height="51mm" y="1mm""#)
         .replace(r#"width="255""#, r#"width="51mm" x="1mm""#))
 }
 
@@ -20,12 +21,14 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
     use qrcode::render::svg;
     use qrcode::QrCode;
 
-    fix_svg_header(QrCode::new(code)?
-        .render()
-        .min_dimensions(200, 200)
-        .dark_color(svg::Color("#000000"))
-        .light_color(svg::Color("#ffffff"))
-        .build())
+    fix_svg_header(
+        QrCode::new(code)?
+            .render()
+            .min_dimensions(200, 200)
+            .dark_color(svg::Color("#000000"))
+            .light_color(svg::Color("#ffffff"))
+            .build(),
+    )
 }
 
 #[derive(Debug)]
@@ -51,12 +54,12 @@ impl Vacc {
 #[clap(author, about)]
 struct Args {
     /// Certificate code (input)
-    #[clap(short, long, default_value = include_str!("../code"))]
-    code: String,
+    #[clap(short, long)]
+    code: Option<String>,
 
     /// SVG template how to render the image.
-    #[clap(short, long, default_value = "template.svg")]
-    template: String,
+    #[clap(short, long)]
+    template: Option<String>,
 
     #[clap(short, long, default_value = "v.svg")]
     out: String,
@@ -69,7 +72,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
     let args = Args::parse();
-    let cert = greenpass::parse(&args.code)?;
+    let code = args.code.unwrap_or(include_str!("../code").to_string());
+    let cert = greenpass::parse(&code)?;
     let pass = cert.passes.last().ok_or("no greenpass found")?;
     let birth = &pass.date_of_birth;
     let name = format!("{}, {}", pass.surname, pass.givenname);
@@ -87,8 +91,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     dbg!(&vac);
     {
-        let mut templ = std::fs::read_to_string(&args.template)?;
-        vac.to_svg(&mut templ, &gen_qr_code(&args.code)?);
+        let mut templ = if let Some(t) = &args.template {
+            std::fs::read_to_string(t)?
+        } else {
+            include_str!("../template.svg").to_string()
+        };
+        vac.to_svg(&mut templ, &gen_qr_code(&code)?);
         std::fs::write(&args.out, &templ)?;
     }
     Ok(())
