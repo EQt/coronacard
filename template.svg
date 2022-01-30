@@ -1,4 +1,4 @@
-<svg height="82mm" viewBox="0 0 200.31496 309.92128" width="53mm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="82mm" viewBox="0 0 200.31496 309.92128" width="53mm" xmlns="http://www.w3.org/2000/svg">
   <text>@inner</text>
   <text font-family="Lato" font-size="8" x="53.422554" y="205.35767"><tspan x="53.422554" y="205.35767">Scan mit CovPassCheck-App</tspan></text>
   <text font-family="Lato" font-size="8" transform="translate(-68.775787 -10.192031)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">Name</tspan></text>
@@ -7,9 +7,21 @@
   <text x="53.094814" y="236.42258"><tspan x="53.094814" y="236.42258"/></text>
   <g font-family="Lato">
     <text font-size="8" transform="translate(24.778676 -11.588031)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">Geburtstag/Date of Birth</tspan></text>
-    <text font-size="12" font-weight="bold" text-anchor="end" transform="translate(49.117734 5.162532)" x="142.37883" y="241.41782"><tspan x="142.37883" y="241.41782">@birth</tspan></text>
-    <text font-size="12" font-weight="bold" transform="translate(-67.763797 54.83924)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">@lastvacc</tspan></text>
-    <text font-size="12" font-weight="bold" text-anchor="end" transform="translate(91.050946 54.36524)" x="97.834846" y="241.41782"><tspan x="97.834846" y="241.41782">@dose</tspan></text>
+    <g font-size="12" font-weight="bold">
+      <text text-anchor="end" transform="translate(49.117734 5.162532)" x="142.37883" y="241.41782"><tspan x="142.37883" y="241.41782">@birth</tspan></text>
+      <text transform="translate(-67.763797 54.83924)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">@lastvacc</tspan></text>
+      <text text-anchor="end" transform="translate(91.050946 54.36524)" x="97.834846" y="241.41782"><tspan x="97.834846" y="241.41782">@dose</tspan></text>
+    </g>
     <text font-size="8" transform="translate(44.799619 27.045334)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">Anzahl Impfungen/</tspan><tspan x="79.282852" y="251.41782">Number of Doses</tspan></text>
+  </g>
+  <g fill="none" stroke="#000" stroke-width=".25">
+    <path d="m0-5v-37.79527559"/>
+    <path d="m-5 0h-37.79527559"/>
+    <path d="m200.31496063-5v-37.79527559"/>
+    <path d="m205.31496063 0h37.79527559"/>
+    <path d="m0 314.92125984v37.79527559"/>
+    <path d="m-5 309.92125984h-37.79527559"/>
+    <path d="m200.31496063 314.92125984v37.79527559"/>
+    <path d="m205.31496063 309.92125984h37.79527559"/>
   </g>
 </svg>
