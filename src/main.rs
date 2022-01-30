@@ -51,7 +51,7 @@ impl Vacc {
 
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
-#[clap(author, about)]
+#[clap(about)]
 struct Args {
     /// Certificate code (input)
     #[clap(short, long)]
@@ -61,7 +61,7 @@ struct Args {
     #[clap(short, long)]
     template: Option<String>,
 
-    #[clap(short, long, default_value = "v.svg")]
+    #[clap(short, long, default_value = "card.svg")]
     out: String,
 
     #[clap(short, long)]
