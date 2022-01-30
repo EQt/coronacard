@@ -90,7 +90,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut templ = std::fs::read_to_string(&args.template)?;
         vac.to_svg(&mut templ);
         let card = gen_qr_code(&args.code)?;
-        templ = templ.replace("@inner", &card);
+        templ = templ.replace("<text>@inner</text>", &card);
         std::fs::write(&args.out, &templ)?;
     }
     Ok(())
