@@ -1,16 +1,14 @@
-fn gen_qr_code(code: &str) -> Result<(), Box<dyn std::error::Error>> {
+fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
     use qrcode::render::svg;
     use qrcode::QrCode;
 
     let code = QrCode::new(code)?;
-    let image = code
+    Ok(code
         .render()
         .min_dimensions(200, 200)
         .dark_color(svg::Color("#000000"))
         .light_color(svg::Color("#ffffff"))
-        .build();
-    std::fs::write("v.svg", &image)?;
-    Ok(())
+       .build())
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -28,5 +26,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             dbg!(&birth, &name, &dose, &vac.date);
         }
     }
-    gen_qr_code(code)
+    std::fs::write("v.svg", gen_qr_code(code)?)?;
+    Ok(())
 }
