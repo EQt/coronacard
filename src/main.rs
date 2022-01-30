@@ -15,8 +15,16 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
 #[derive(clap::Parser)]
 #[clap(author, about)]
 struct Args {
-    #[clap(short, long, default_value_t = include_str!("../code").to_string())]
+    /// Certificate code (input)
+    #[clap(short, long, default_value = include_str!("../code"))]
     code: String,
+
+    /// SVG template how to render the image.
+    #[clap(short, long, default_value = "../template.svg")]
+    template: String,
+
+    #[clap(short, long, default_value = "v.svg")]
+    out: String,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -36,6 +44,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             dbg!(&birth, &name, &dose, &vac.date);
         }
     }
-    std::fs::write("v.svg", gen_qr_code(&args.code)?)?;
+    std::fs::write(&args.out, gen_qr_code(&args.code)?)?;
     Ok(())
 }
