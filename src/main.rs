@@ -35,7 +35,7 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
 struct Vacc {
     name: String,
     birth: String,
-    lastvacc: String,
+    last: String,
     dose: String,
 }
 
@@ -44,7 +44,7 @@ impl Vacc {
         *templ = templ.replace("@birth", &self.birth);
         *templ = templ.replace("@name", &self.name);
         *templ = templ.replace("@dose", &self.dose);
-        *templ = templ.replace("@lastvacc", &self.lastvacc);
+        *templ = templ.replace("@lastvacc", &self.last);
         *templ = templ.replace("<text>@inner</text>", inner);
     }
 }
@@ -85,11 +85,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         greenpass::CertInfo::Vaccine(vac) => Vacc {
             name,
             dose: format!("{}/{}", &vac.dose_number, vac.dose_total),
-            lastvacc: format!("{}", &vac.date),
+            last: format!("{}", &vac.date),
             birth: birth.to_owned(),
         },
     };
-    dbg!(&vac);
+    eprint!("{vac:#?}");
     {
         let mut templ = if let Some(t) = &args.template {
             std::fs::read_to_string(t)?
@@ -98,6 +98,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         };
         vac.to_svg(&mut templ, &gen_qr_code(&code)?);
         std::fs::write(&args.out, &templ)?;
+        eprintln!(" => {}", &args.out);
     }
     Ok(())
 }
