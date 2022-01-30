@@ -10,7 +10,7 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
         .light_color(svg::Color("#ffffff"))
         .build();
     {
-        let tag_end = qr.find(">").ok_or("could not find end tag")?;
+        let tag_end = qr.find('>').ok_or("could not find end tag")?;
         let svg_header = &qr[..tag_end];
         if svg_header.contains("x=") {
             None.ok_or("x attribute in svg header")?;
@@ -23,7 +23,7 @@ fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
         .strip_prefix(r#"<?xml version="1.0" standalone="yes"?>"#)
         .ok_or("expected prefix not found")?;
     let qr = regex::Regex::new(r#"height="\d+""#)?
-        .replace(&qr, r#"height="51mm" y="1mm""#);
+        .replace(qr, r#"height="51mm" y="1mm""#);
     let qr = regex::Regex::new(r#"width="\d+""#)?
         .replace(&qr, r#"width="51mm" x="1mm""#);
     Ok(qr.to_string())
