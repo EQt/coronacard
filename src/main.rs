@@ -12,11 +12,8 @@ fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
     let qr = qr
         .strip_prefix(r#"<?xml version="1.0" standalone="yes"?>"#)
         .ok_or("expected prefix not found")?;
-    let qr = regex::Regex::new(r#"height="\d+""#)?
-        .replace(qr, r#"height="51mm" y="1mm""#);
-    let qr = regex::Regex::new(r#"width="\d+""#)?
-        .replace(&qr, r#"width="51mm" x="1mm""#);
-    Ok(qr.to_string())
+    Ok(qr.replace(r#"height="255""#, r#"height="51mm" y="1mm""#)
+        .replace(r#"width="255""#, r#"width="51mm" x="1mm""#))
 }
 
 fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
