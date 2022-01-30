@@ -1,9 +1,21 @@
+fn gen_qr_code(code: &str) -> Result<(), Box<dyn std::error::Error>> {
+    use qrcode::render::svg;
+    use qrcode::QrCode;
+
+    let code = QrCode::new(code)?;
+    let image = code
+        .render()
+        .min_dimensions(200, 200)
+        .dark_color(svg::Color("#000000"))
+        .light_color(svg::Color("#ffffff"))
+        .build();
+    std::fs::write("v.svg", &image)?;
+    Ok(())
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let code = include_str!("../code");
     let cert = greenpass::parse(&code)?;
-    // println!("{cert:?}");
-    // let created = cert.created;
     let pass = cert.passes.last().ok_or("no greenpass found")?;
     let birth = &pass.date_of_birth;
     let name = format!("{}, {}", pass.surname, pass.givenname);
@@ -16,5 +28,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             dbg!(&birth, &name, &dose, &vac.date);
         }
     }
-    Ok(())
+    gen_qr_code(code)
 }
