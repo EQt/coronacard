@@ -21,9 +21,10 @@ function download(blob, filename) {
 
 export function convert() {
     console.log("Convert button pressed!");
-    convertButtonElement = document.getElementById('convertButton');
+    let convertButtonElement = document.getElementById('convertButton');
     var selectedFile = document.getElementById('imageInputFile').files[0];
-    inputFileExtension = ".png";
+    let inputFileExtension = ".png";
+    console.log(`selectedFile = ${selectedFile}`)
 
     var outFiletypeElement = document.getElementById('inlineFormCustomSelectPref');
     var outputImageFormatEnum = parseInt(
@@ -37,10 +38,10 @@ export function convert() {
         alert("Please select your file first!");
         return;
     } else {
-        convertButtonElement.innerHTML = 'Converting...';
+        convertButtonElement.innerHTML = 'Computing...';
         console.log("Selected file:");
         console.log(selectedFile);
-        fileData = new Blob([selectedFile]);
+        let fileData = new Blob([selectedFile]);
 
         // Pass getBuffer to promise.
         var promise = new Promise(getBuffer);
