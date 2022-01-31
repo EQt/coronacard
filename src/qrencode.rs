@@ -1,10 +1,10 @@
-fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
-    let qr = qr
+fn fix_svg_header(svg: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let svg = svg
         .strip_prefix(r#"<?xml version="1.0" standalone="yes"?>"#)
         .ok_or("expected prefix not found")?;
     {
-        let tag_end = qr.find('>').ok_or("could not find end tag")?;
-        let svg_header = &qr[..tag_end];
+        let tag_end = svg.find('>').ok_or("could not find end tag")?;
+        let svg_header = &svg[..tag_end];
         if svg_header.contains(" x=") {
             None.ok_or(format!("x attribute in svg header: {svg_header}"))?;
         }
@@ -12,7 +12,7 @@ fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
             None.ok_or("y attribute in svg header")?;
         }
     }
-    Ok(qr
+    Ok(svg
         .replacen(r#"height="255""#, r#"height="51mm" y="1mm""#, 1)
         .replacen(r#"width="255""#, r#"width="51mm" x="1mm""#, 1))
 }
@@ -22,7 +22,7 @@ pub(crate) fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Erro
     use qrcode::QrCode;
 
     fix_svg_header(
-        QrCode::new(code)?
+        &QrCode::new(code)?
             .render()
             .min_dimensions(200, 200)
             .dark_color(svg::Color("#000000"))
