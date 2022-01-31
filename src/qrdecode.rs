@@ -6,9 +6,13 @@ where
     // Prepare for detection
     let mut img = rqrr::PreparedImage::prepare(img);
     // Search for grids, without decoding
-    let grids = img.detect_grids();
-    assert_eq!(grids.len(), 1);
-    // Decode the grid
-    let (_meta, content) = grids[0].decode()?;
-    Ok(content)
+    match &img.detect_grids()[..] {
+        [grid] => {
+            // Decode the grid
+            let (_meta, content) = grid.decode()?;
+            Ok(content)
+        }
+        [] => None.ok_or("no grid found")?,
+        _ => None.ok_or("more than one grid found")?,
+    }
 }
