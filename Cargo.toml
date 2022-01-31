@@ -11,4 +11,5 @@ greenpass = "0.2.0"
 image = "0.23.14"
 qrcode = "0.12.0"
 rqrr = "0.4.0"
+xmltree = "0.10.3"
 

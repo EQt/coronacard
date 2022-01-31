@@ -1,3 +1,4 @@
+mod print;
 mod qrdecode;
 
 fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
@@ -70,7 +71,7 @@ struct Args {
     out: String,
 
     #[clap(short, long)]
-    no_show: bool,
+    din_a4: bool,
 }
 
 fn parse(code: &str) -> Result<Vacc, Box<dyn std::error::Error>> {
@@ -88,7 +89,7 @@ fn parse(code: &str) -> Result<Vacc, Box<dyn std::error::Error>> {
             birth: birth.to_owned(),
         }),
     }
- }
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
@@ -97,6 +98,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Some(image) = args.image {
         args.code = Some(crate::qrdecode::decode_qr(image)?);
     }
+    args.din_a4 = true;
     let code = args
         .code
         .as_ref()
@@ -111,6 +113,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             include_str!("../data/template.svg").to_string()
         };
         vac.to_svg(&mut templ, &gen_qr_code(code)?);
+        if args.din_a4 {
+            templ = crate::print::print_a4(&templ)?;
+        }
         std::fs::write(&args.out, &templ)?;
         eprintln!(" => {}", &args.out);
     }
