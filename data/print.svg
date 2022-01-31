@@ -1,0 +1,24 @@
+<svg height="297mm" viewBox="0 0 793.70081 1122.5197" width="210mm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <image height="309.92099" preserveAspectRatio="none" width="200.315" x="200" xlink:href="../card.svg" y="100"/>
+    <g fill="none" stroke="#000" stroke-width=".25">
+      <path d="m200 95v-37.795276"/>
+      <path d="m195 100h-37.79528"/>
+      <path d="m400.315 95v-37.795276"/>
+      <path d="m405.315 100h37.79528"/>
+      <path d="m200 414.92099v37.79528"/>
+      <path d="m195 409.92099h-37.79528"/>
+      <path d="m400.315 414.92099v37.79528"/>
+      <path d="m405.315 409.92099h37.79528"/>
+    </g>
+    <image height="309.92099" preserveAspectRatio="none" width="200.315" x="400.315" xlink:href="../card.svg" y="100"/>
+    <path d="m400.315 95v-37.795276" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m395.315 100h-37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m600.63 95v-37.795276" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m605.63 100h37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m400.315 414.92099v37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m395.315 409.92099h-37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m600.63 414.92099v37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+    <path d="m605.63 409.92099h37.79528" fill="none" stroke="#000" stroke-width=".25"/>
+  </g>
+</svg>
