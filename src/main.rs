@@ -1,6 +1,6 @@
-mod print;
 mod qrdecode;
 mod qrencode;
+mod svg;
 mod vacc;
 use std::path::PathBuf;
 
@@ -40,17 +40,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let vac = crate::vacc::Vacc::parse(code)?;
     eprint!("{vac:#?}");
     {
-        let mut templ = if let Some(t) = &args.template {
-            std::fs::read_to_string(t)?
-        } else {
-            include_str!("../data/template.svg").to_string()
-        };
+        let mut templ = args
+            .template
+            .map(std::fs::read_to_string)
+            .unwrap_or(Ok(include_str!("../data/template.svg").to_string()))?;
         vac.to_svg(&mut templ, &crate::qrencode::gen_qr_code(code)?);
         if args.din_a4 {
-            templ = crate::print::print_a4(&templ)?;
+            templ = crate::svg::print_a4(&templ)?;
         }
         std::fs::write(&args.out, &templ)?;
-        eprintln!(" => {:?}", &args.out);
     }
+    eprintln!(" => {:?}", &args.out);
     Ok(())
 }
