@@ -1,11 +1,4 @@
-import wasmInit from "./coronacard_wasm.js";
-
-// WASM call
-async function gen_svg(data) {
-    // Instantiate our wasm module
-    const module = await wasmInit("./coronacard_wasm_bg.wasm");
-    return module.gen_svg(data, true);
-}
+import {gen_svg} from "./coronacard_wasm.js";
 
 // adapted from https://stackoverflow.com/a/45831280
 function download(blob, filename) {
@@ -34,24 +27,25 @@ export function convert() {
         let fileData = new Blob([selectedFile]);
 
         // returns a byte array of file contents
-        function getBuffer(resolve) {
+        let promise = new Promise(function (resolve) {
             let reader = new FileReader();
             reader.readAsArrayBuffer(fileData);
-            reader.onload = function () {
-                let arrayBuffer = reader.result
+            reader.onload = function (e) {
+                let arrayBuffer = e.target.result;
+                console.log(arrayBuffer);
                 let bytes = new Uint8Array(arrayBuffer);
                 resolve(bytes);
             }
-        }
-        let promise = new Promise(getBuffer);
+        });
         promise.then(function (bytesArr) {
             console.log(`run wasm (${selectedFile})`);
-            let retBytes = gen_svg(bytesArr);
+            let retBytes = gen_svg(bytesArr, true);
             console.log("Done");
-            let blob = new Blob([retBytes], { type: "image/svg" });
-            let output_filename = "card.svg";
-            console.log("Showing SaveAs dialog to the user...");
-            download(blob, output_filename);
+            console.log(retBytes);
+            // let blob = new Blob([retBytes], { type: "text/plain" });
+            // let output_filename = "card.svg";
+            // console.log("Showing SaveAs dialog to the user...");
+            // download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
         }).catch(function (err) {
             console.log(err);
