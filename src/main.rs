@@ -43,6 +43,15 @@ pub(crate) fn render_svg(
     Ok(std::fs::write(&args.out, &templ)?)
 }
 
+pub(crate) fn code_to_svg(code: &str, args: &Args) -> Result<(), Box<dyn std::error::Error>> {
+    let vac = crate::vacc::Vacc::parse(code)?;
+    let qr = crate::qrencode::gen_qr_code(code)?;
+    eprint!("{vac:#?}");
+    render_svg(&args, &vac, &qr)?;
+    eprintln!(" => {:?}", &args.out);
+    Ok(())
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
@@ -54,10 +63,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
         .or_else(|| img_path.map(crate::qrdecode::decode_qr))
         .ok_or("need --code or --image")??;
-    let vac = crate::vacc::Vacc::parse(code)?;
-    let qr = crate::qrencode::gen_qr_code(code)?;
-    eprint!("{vac:#?}");
-    render_svg(&args, &vac, &qr)?;
-    eprintln!(" => {:?}", &args.out);
-    Ok(())
+    code_to_svg(code, &args)
 }
