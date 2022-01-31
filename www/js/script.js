@@ -1,7 +1,7 @@
-import wasmInit from "./coronacard_wasm.js";
+import wasmInit from "/js/coronacard_wasm.js";
 
 // WASM call
-async function gen_svg(data, informat, outformat) {
+async function gen_svg(data) {
     // Instantiate our wasm module
     const module = await wasmInit("./coronacard_wasm_bg.wasm");
     return module.gen_svg(data, true);
@@ -22,38 +22,34 @@ function download(blob, filename) {
 export function convert() {
     console.log("Convert button pressed!");
     let convertButtonElement = document.getElementById('convertButton');
-    var selectedFile = document.getElementById('imageInputFile').files[0];
+    let selectedFile = document.getElementById('imageInputFile').files[0];
     let inputFileExtension = ".png";
-    console.log(`selectedFile = ${selectedFile}`)
-
-    var outFiletypeElement = document.getElementById('inlineFormCustomSelectPref');
-    var outputImageFormatEnum = parseInt(
-        outFiletypeElement.options[outFiletypeElement.selectedIndex].value
-    );
-    var outputFileExtension =
-        outFiletypeElement.options[outFiletypeElement.selectedIndex].text.toLowerCase();
-
-    console.log("Output image format: " + outputFileExtension);
+    let outFiletypeElement = document.getElementById('inlineFormCustomSelectPref');
+    console.log(`Selected file: ${selectedFile}`);
     if (selectedFile === undefined) {
         alert("Please select your file first!");
         return;
     } else {
         convertButtonElement.innerHTML = 'Computing...';
-        console.log("Selected file:");
-        console.log(selectedFile);
         let fileData = new Blob([selectedFile]);
 
-        // Pass getBuffer to promise.
-        var promise = new Promise(getBuffer);
-        // Wait for promise to be resolved, or log error.
+        // returns a byte array of file contents
+        function getBuffer(resolve) {
+            let reader = new FileReader();
+            reader.readAsArrayBuffer(fileData);
+            reader.onload = function () {
+                var arrayBuffer = reader.result
+                var bytes = new Uint8Array(arrayBuffer);
+                resolve(bytes);
+            }
+        }
+        let promise = new Promise(getBuffer);
         promise.then(function (bytesArr) {
-            // Here you can pass the bytes to another function.
-            console.log(
-                "run wasm (" + inputFileExtension + " -> " + outputFileExtension + ")");
-            retBytes = gen_svg(bytesArr, inputImageFormatEnum, outputImageFormatEnum);
-            console.log("Done!");
-            output_filename = file_basename(selectedFile.name) + "." + outputFileExtension;
-            var blob = new Blob([retBytes], { type: "image/" + outputFileExtension });
+            console.log(`run wasm (${selectedFile})`);
+            let retBytes = gen_svg(bytesArr);
+            console.log("Done");
+            var blob = new Blob([retBytes], { type: "image/svg" });
+            let output_filename = "card.svg";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
@@ -66,19 +62,9 @@ export function convert() {
     }
 }
 
-// returns a byte array of file contents
-function getBuffer(resolve) {
-    var reader = new FileReader();
-    reader.readAsArrayBuffer(fileData);
-    reader.onload = function () {
-        var arrayBuffer = reader.result
-        var bytes = new Uint8Array(arrayBuffer);
-        resolve(bytes);
-    }
-}
 
 // sets the input file field to selected file name
-function updateInputField() {
+export function updateInputField() {
     inputElem = document.getElementById('imageInputFile');
     selectedFile = inputElem.files[0]
     fileNameField = document.getElementById("fileNameField")
