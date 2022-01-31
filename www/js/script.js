@@ -1,7 +1,10 @@
+import wasmInit from "./coronacard_wasm.js";
+
 // WASM call
 function gen_svg(data, informat, outformat) {
-    ret = Module.convertImage(data, data.length, informat, outformat);
-    return ret;
+    // Instantiate our wasm module
+    const module = await wasmInit("./coronacard_wasm_bg.wasm");
+    return module.gen_svg(data, true);
 }
 
 // adapted from https://stackoverflow.com/a/45831280
@@ -20,8 +23,7 @@ function convert() {
     console.log("Convert button pressed!");
     convertButtonElement = document.getElementById('convertButton');
     var selectedFile = document.getElementById('imageInputFile').files[0];
-    inputFileExtension = file_extension(selectedFile.name);
-    inputImageFormatEnum = imagetype_enum_from_filename(selectedFile.name);
+    inputFileExtension = ".png";
 
     var outFiletypeElement = document.getElementById('inlineFormCustomSelectPref');
     var outputImageFormatEnum = parseInt(
