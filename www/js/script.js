@@ -1,7 +1,7 @@
 import wasmInit from "./coronacard_wasm.js";
 
 // WASM call
-function gen_svg(data, informat, outformat) {
+async function gen_svg(data, informat, outformat) {
     // Instantiate our wasm module
     const module = await wasmInit("./coronacard_wasm_bg.wasm");
     return module.gen_svg(data, true);
@@ -19,7 +19,7 @@ function download(blob, filename) {
     document.body.removeChild(element);
 }
 
-function convert() {
+export function convert() {
     console.log("Convert button pressed!");
     convertButtonElement = document.getElementById('convertButton');
     var selectedFile = document.getElementById('imageInputFile').files[0];
