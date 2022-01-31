@@ -17,3 +17,6 @@ rqrr = { version = "0.4.0", default-features = false }
 lto = "fat"
 codegen-units = 1
 opt-level = "s"
+
+[workspace]
+members = [ "wasm" ]

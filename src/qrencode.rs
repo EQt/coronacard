@@ -14,7 +14,7 @@ fn fix_svg_header(svg: &str) -> Result<String, Box<dyn std::error::Error>> {
     Ok(String::from_utf8(out)?)
 }
 
-pub(crate) fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
+pub fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
     use qrcode::render::svg;
     use qrcode::QrCode;
 

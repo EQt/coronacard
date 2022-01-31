@@ -1,9 +1,6 @@
-mod qrdecode;
-mod qrencode;
-mod svg;
-mod vacc;
 use std::path::PathBuf;
-use vacc::Vacc;
+use coronacard::vacc::Vacc;
+use coronacard::load_template;
 
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
@@ -27,16 +24,6 @@ struct Args {
     din_a4: bool,
 }
 
-pub(crate) fn load_template<P>(path: Option<P>) -> Result<String, Box<dyn std::error::Error>>
-where
-    P: AsRef<std::path::Path>,
-{
-    Ok(path
-        .as_ref()
-        .map(std::fs::read_to_string)
-        .unwrap_or_else(|| Ok(include_str!("../data/template.svg").into()))?)
-}
-
 pub(crate) fn render_svg(
     args: &Args,
     vac: &Vacc,
@@ -55,7 +42,7 @@ pub(crate) fn render_svg(
 
 pub(crate) fn code_to_svg(code: &str, args: &Args) -> Result<(), Box<dyn std::error::Error>> {
     let vac = crate::vacc::Vacc::parse(code)?;
-    let qr = crate::qrencode::gen_qr_code(code)?;
+    let qr = coronacard::gen_qr_code(code)?;
     eprint!("{vac:#?}");
     render_svg(args, &vac, &qr)?;
     eprintln!(" => {:?}", &args.out);
