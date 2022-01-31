@@ -1,0 +1,9 @@
+[submodule "www/webp-wasm"]
+	path = learn/webp-wasm
+	url = git@github.com:le0pard/webp-wasm.git
+[submodule "www/wasm-go-image-to-ascii"]
+	path = learn/wasm-go-image-to-ascii
+	url = git@github.com:subeshb1/wasm-go-image-to-ascii
+[submodule "www/wasm-image-converter"]
+	path = learn/wasm-image-converter
+	url = git@github.com:kopytjuk/wasm-image-converter.git

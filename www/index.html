@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>WASM Image Converter</title>
+    <meta name="description" content="Convert images between various formats.">
+    <meta name="author" content="Marat Kopytjuk">
+
+    <link rel="shortcut icon" type="image/x-icon" href="wasm-logo.png" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    
+  </head>
+  <body>
+
+    <div class="d-flex align-items-center flex-column justify-content-center h-100" id="header">
+        <div class="container bg-white p-3 rounded shadow" id="formContainer">
+            
+            <div class="text-center">
+                <img src="wasm-logo.png" width="100px" class="img-fluid mx-auto" alt="Responsive image">
+                <h2 class="text-center ">Image Converter</h2>
+            </div>
+            
+            <form>
+                <div class="form-group">
+                    <div class="custom-file mt-4">
+                        <input type="file" onchange="updateInputField()" accept="image/*" class="custom-file-input" id="imageInputFile">
+                        <label class="custom-file-label" for="imageInputFile" id="fileNameField">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Format</label>
+                    <select class="custom-select my-1 mr-sm-2 form-control form-control-lg" id="inlineFormCustomSelectPref">
+                        <option value="0">JPEG</option>
+                        <option value="1">PNG</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type='button' onClick="convert()" class="btn btn btn-primary btn-lg btn-block" id="convertButton">Convert</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="js/wasmconverter.js"></script>
+    <script src="js/file_utils.js"></script>
+    <script src="js/script.js"></script>
+
+  </body>
+</html>
