@@ -35,7 +35,7 @@ pub(crate) fn render_svg(
     let mut templ = args
         .template.as_ref()
         .map(std::fs::read_to_string)
-        .unwrap_or(Ok(include_str!("../data/template.svg").to_string()))?;
+        .unwrap_or_else(|| Ok(include_str!("../data/template.svg").into()))?;
     vac.to_svg(&mut templ, qr);
     if args.din_a4 {
         templ = crate::svg::print_a4(&templ)?;
@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .code
         .as_ref()
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
-        .or(img_path.map(|img| crate::qrdecode::decode_qr(img)))
+        .or_else(|| img_path.map(crate::qrdecode::decode_qr))
         .ok_or("need --code or --image")??;
     let vac = crate::vacc::Vacc::parse(code)?;
     let qr = crate::qrencode::gen_qr_code(code)?;
