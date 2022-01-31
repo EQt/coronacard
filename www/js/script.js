@@ -1,4 +1,4 @@
-import wasmInit from "/js/coronacard_wasm.js";
+import wasmInit from "./coronacard_wasm.js";
 
 // WASM call
 async function gen_svg(data) {
@@ -9,8 +9,8 @@ async function gen_svg(data) {
 
 // adapted from https://stackoverflow.com/a/45831280
 function download(blob, filename) {
-    var element = document.createElement('a');
-    url = URL.createObjectURL(blob)
+    let element = document.createElement('a');
+    let url = URL.createObjectURL(blob)
     element.setAttribute('href', url);
     element.setAttribute('download', filename);
     element.style.display = 'none';
@@ -38,8 +38,8 @@ export function convert() {
             let reader = new FileReader();
             reader.readAsArrayBuffer(fileData);
             reader.onload = function () {
-                var arrayBuffer = reader.result
-                var bytes = new Uint8Array(arrayBuffer);
+                let arrayBuffer = reader.result
+                let bytes = new Uint8Array(arrayBuffer);
                 resolve(bytes);
             }
         }
@@ -48,7 +48,7 @@ export function convert() {
             console.log(`run wasm (${selectedFile})`);
             let retBytes = gen_svg(bytesArr);
             console.log("Done");
-            var blob = new Blob([retBytes], { type: "image/svg" });
+            let blob = new Blob([retBytes], { type: "image/svg" });
             let output_filename = "card.svg";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
