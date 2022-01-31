@@ -1,4 +1,6 @@
-import {gen_svg} from "./coronacard_wasm.js";
+import init, {gen_svg} from './coronacard_wasm.js';
+
+init();
 
 // adapted from https://stackoverflow.com/a/45831280
 function download(blob, filename) {
@@ -41,7 +43,7 @@ export function convert() {
             console.log(`run wasm (${selectedFile})`);
             let retBytes = gen_svg(bytesArr, true);
             console.log("Done");
-            console.log(retBytes);
+            console.log(retBytes.slice(0, 30));
             // let blob = new Blob([retBytes], { type: "text/plain" });
             // let output_filename = "card.svg";
             // console.log("Showing SaveAs dialog to the user...");
