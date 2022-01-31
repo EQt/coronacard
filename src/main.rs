@@ -1,3 +1,5 @@
+mod qrdecode;
+
 fn fix_svg_header(qr: String) -> Result<String, Box<dyn std::error::Error>> {
     {
         let tag_end = qr.find('>').ok_or("could not find end tag")?;
@@ -57,6 +59,9 @@ struct Args {
     #[clap(short, long)]
     code: Option<String>,
 
+    #[clap(short, long)]
+    image: Option<String>,
+
     /// SVG template how to render the image.
     #[clap(short, long)]
     template: Option<String>,
@@ -88,7 +93,10 @@ fn parse(code: &str) -> Result<Vacc, Box<dyn std::error::Error>> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
-    let args = Args::parse();
+    let mut args = Args::parse();
+    if let Some(image) = args.image {
+        args.code = Some(crate::qrdecode::decode_qr(image)?);
+    }
     let code = args
         .code
         .as_ref()
