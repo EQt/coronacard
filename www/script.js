@@ -1,7 +1,5 @@
 // WASM call
 function gen_svg(data, informat, outformat) {
-    // data: Uint8Array
-    // informat/outformat: 0:JPEG, 1:PNG
     ret = Module.convertImage(data, data.length, informat, outformat);
     return ret;
 }
@@ -44,19 +42,14 @@ function convert() {
 
         // Pass getBuffer to promise.
         var promise = new Promise(getBuffer);
-
         // Wait for promise to be resolved, or log error.
         promise.then(function (bytesArr) {
-
             // Here you can pass the bytes to another function.
-
             console.log(
                 "run wasm (" + inputFileExtension + " -> " + outputFileExtension + ")");
             retBytes = gen_svg(bytesArr, inputImageFormatEnum, outputImageFormatEnum);
             console.log("Done!");
-
             output_filename = file_basename(selectedFile.name) + "." + outputFileExtension;
-
             var blob = new Blob([retBytes], { type: "image/" + outputFileExtension });
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
