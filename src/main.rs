@@ -2,6 +2,7 @@ mod print;
 mod qrdecode;
 mod qrencode;
 mod vacc;
+use std::path::PathBuf;
 
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
@@ -12,14 +13,14 @@ struct Args {
     code: Option<String>,
 
     #[clap(short, long)]
-    image: Option<String>,
+    image: Option<PathBuf>,
 
     /// SVG template how to render the image.
     #[clap(short, long)]
-    template: Option<String>,
+    template: Option<PathBuf>,
 
     #[clap(short, long, default_value = "card.svg")]
-    out: String,
+    out: PathBuf,
 
     #[clap(short, long)]
     din_a4: bool,
@@ -29,7 +30,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
     let args = Args::parse();
-    let img_path = args.image;
+    let img_path = args.image; // .or(Some("data/qr.jpeg".into()));
     let code = &args
         .code
         .as_ref()
@@ -49,7 +50,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             templ = crate::print::print_a4(&templ)?;
         }
         std::fs::write(&args.out, &templ)?;
-        eprintln!(" => {}", &args.out);
+        eprintln!(" => {:?}", &args.out);
     }
     Ok(())
 }
