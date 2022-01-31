@@ -7,12 +7,13 @@ pub(crate) struct Vacc {
 }
 
 impl Vacc {
-    pub(crate) fn to_svg(&self, templ: &mut String, inner: &str) {
-        *templ = templ.replace("@birth", &self.birth);
-        *templ = templ.replace("@name", &self.name);
-        *templ = templ.replace("@dose", &self.dose);
-        *templ = templ.replace("@lastvacc", &self.last);
-        *templ = templ.replace("<text>@inner</text>", inner);
+    pub(crate) fn to_svg(&self, mut templ: String, inner: &str) -> String {
+        templ = templ.replace("@birth", &self.birth);
+        templ = templ.replace("@name", &self.name);
+        templ = templ.replace("@dose", &self.dose);
+        templ = templ.replace("@lastvacc", &self.last);
+        templ = templ.replace("<text>@inner</text>", inner);
+        templ
     }
 
     pub(crate) fn parse(code: &str) -> Result<Self, Box<dyn std::error::Error>> {

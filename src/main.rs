@@ -32,22 +32,28 @@ pub(crate) fn render_svg(
     vac: &Vacc,
     qr: &str,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let mut templ = args
-        .template.as_ref()
-        .map(std::fs::read_to_string)
-        .unwrap_or_else(|| Ok(include_str!("../data/template.svg").into()))?;
-    vac.to_svg(&mut templ, qr);
-    if args.din_a4 {
-        templ = crate::svg::print_a4(&templ)?;
-    }
-    Ok(std::fs::write(&args.out, &templ)?)
+    let templ = vac.to_svg(
+        args.template
+            .as_ref()
+            .map(std::fs::read_to_string)
+            .unwrap_or_else(|| Ok(include_str!("../data/template.svg").into()))?,
+        qr,
+    );
+    Ok(std::fs::write(
+        &args.out,
+        if args.din_a4 {
+            crate::svg::print_a4(&templ)?
+        } else {
+            templ
+        },
+    )?)
 }
 
 pub(crate) fn code_to_svg(code: &str, args: &Args) -> Result<(), Box<dyn std::error::Error>> {
     let vac = crate::vacc::Vacc::parse(code)?;
     let qr = crate::qrencode::gen_qr_code(code)?;
     eprint!("{vac:#?}");
-    render_svg(&args, &vac, &qr)?;
+    render_svg(args, &vac, &qr)?;
     eprintln!(" => {:?}", &args.out);
     Ok(())
 }
