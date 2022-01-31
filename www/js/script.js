@@ -44,10 +44,10 @@ export function convert() {
             let retBytes = gen_svg(bytesArr, true);
             console.log("Done");
             console.log(retBytes.slice(0, 30));
-            // let blob = new Blob([retBytes], { type: "text/plain" });
-            // let output_filename = "card.svg";
-            // console.log("Showing SaveAs dialog to the user...");
-            // download(blob, output_filename);
+            let blob = new Blob([retBytes], { type: "text/plain" });
+            let output_filename = "card.txt";
+            console.log("Showing SaveAs dialog to the user...");
+            download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
         }).catch(function (err) {
             console.log(err);
@@ -61,8 +61,8 @@ export function convert() {
 
 // sets the input file field to selected file name
 export function updateInputField() {
-    inputElem = document.getElementById('imageInputFile');
-    selectedFile = inputElem.files[0]
-    fileNameField = document.getElementById("fileNameField")
+    let inputElem = document.getElementById("imageInputFile");
+    let selectedFile = inputElem.files[0]
+    let fileNameField = document.getElementById("fileNameField")
     fileNameField.innerHTML = selectedFile.name;
 }
