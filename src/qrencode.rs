@@ -1,20 +1,17 @@
 fn fix_svg_header(svg: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let svg = svg
-        .strip_prefix(r#"<?xml version="1.0" standalone="yes"?>"#)
-        .ok_or("expected prefix not found")?;
-    {
-        let tag_end = svg.find('>').ok_or("could not find end tag")?;
-        let svg_header = &svg[..tag_end];
-        if svg_header.contains(" x=") {
-            None.ok_or(format!("x attribute in svg header: {svg_header}"))?;
-        }
-        if svg_header.contains(" y=") {
-            None.ok_or("y attribute in svg header")?;
-        }
-    }
-    Ok(svg
-        .replacen(r#"height="255""#, r#"height="51mm" y="1mm""#, 1)
-        .replacen(r#"width="255""#, r#"width="51mm" x="1mm""#, 1))
+    let mut xml = xmltree::Element::parse(svg.as_bytes())?;
+    xml.attributes.insert("x".into(), "1mm".into());
+    xml.attributes.insert("y".into(), "1mm".into());
+    xml.attributes.insert("width".into(), "51mm".into());
+    xml.attributes.insert("height".into(), "51mm".into());
+    let mut out = Vec::new();
+    xml.write_with_config(
+        &mut out,
+        xmltree::EmitterConfig::new()
+            .write_document_declaration(false)
+            .perform_indent(false),
+    )?;
+    Ok(String::from_utf8(out)?)
 }
 
 pub(crate) fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {

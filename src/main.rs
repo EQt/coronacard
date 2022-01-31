@@ -32,7 +32,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Some(image) = args.image {
         args.code = Some(crate::qrdecode::decode_qr(image)?);
     }
-    args.din_a4 = true;
     let code = args
         .code
         .as_ref()
