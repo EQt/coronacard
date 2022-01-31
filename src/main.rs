@@ -3,6 +3,7 @@ mod qrencode;
 mod svg;
 mod vacc;
 use std::path::PathBuf;
+use vacc::Vacc;
 
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
@@ -26,11 +27,27 @@ struct Args {
     din_a4: bool,
 }
 
+pub(crate) fn render_svg(
+    args: &Args,
+    vac: &Vacc,
+    qr: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut templ = args
+        .template.as_ref()
+        .map(std::fs::read_to_string)
+        .unwrap_or(Ok(include_str!("../data/template.svg").to_string()))?;
+    vac.to_svg(&mut templ, qr);
+    if args.din_a4 {
+        templ = crate::svg::print_a4(&templ)?;
+    }
+    Ok(std::fs::write(&args.out, &templ)?)
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
     let args = Args::parse();
-    let img_path = args.image; // .or(Some("data/qr.jpeg".into()));
+    let img_path = args.image.as_ref();
     let code = &args
         .code
         .as_ref()
@@ -38,18 +55,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .or(img_path.map(|img| crate::qrdecode::decode_qr(img)))
         .ok_or("need --code or --image")??;
     let vac = crate::vacc::Vacc::parse(code)?;
+    let qr = crate::qrencode::gen_qr_code(code)?;
     eprint!("{vac:#?}");
-    {
-        let mut templ = args
-            .template
-            .map(std::fs::read_to_string)
-            .unwrap_or(Ok(include_str!("../data/template.svg").to_string()))?;
-        vac.to_svg(&mut templ, &crate::qrencode::gen_qr_code(code)?);
-        if args.din_a4 {
-            templ = crate::svg::print_a4(&templ)?;
-        }
-        std::fs::write(&args.out, &templ)?;
-    }
+    render_svg(&args, &vac, &qr)?;
     eprintln!(" => {:?}", &args.out);
     Ok(())
 }
