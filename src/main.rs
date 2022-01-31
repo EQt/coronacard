@@ -28,15 +28,14 @@ struct Args {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
-    let mut args = Args::parse();
-    if let Some(image) = args.image {
-        args.code = Some(crate::qrdecode::decode_qr(image)?);
-    }
-    let code = args
+    let args = Args::parse();
+    let img_path = args.image;
+    let code = &args
         .code
         .as_ref()
-        .map(|c| c.trim_start_matches("QR-Code:"))
-        .unwrap_or(include_str!("../data/code"));
+        .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
+        .or(img_path.map(|img| crate::qrdecode::decode_qr(img)))
+        .ok_or("need --code or --image")??;
     let vac = crate::vacc::Vacc::parse(code)?;
     eprint!("{vac:#?}");
     {
