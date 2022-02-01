@@ -1,6 +1,5 @@
-use std::path::PathBuf;
 use coronacard::vacc::Vacc;
-use coronacard::load_template;
+use std::path::PathBuf;
 
 /// Certificate code to SVG converter.
 #[derive(clap::Parser)]
@@ -22,6 +21,16 @@ struct Args {
 
     #[clap(short, long)]
     din_a4: bool,
+}
+
+pub fn load_template<P>(path: Option<P>) -> Result<String, Box<dyn std::error::Error>>
+where
+    P: AsRef<std::path::Path>,
+{
+    Ok(path
+        .as_ref()
+        .map(std::fs::read_to_string)
+        .unwrap_or_else(|| Ok(coronacard::default_template()))?)
 }
 
 pub(crate) fn render_svg(
