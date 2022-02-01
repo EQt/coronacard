@@ -5,12 +5,12 @@ use std::path::PathBuf;
 #[derive(clap::Parser)]
 #[clap(about)]
 struct Args {
+    #[clap(short, long)]
+    image: Option<PathBuf>,
+
     /// Certificate code (input)
     #[clap(short, long)]
     code: Option<String>,
-
-    #[clap(short, long)]
-    image: Option<PathBuf>,
 
     /// SVG template how to render the image.
     #[clap(short, long)]
@@ -21,6 +21,9 @@ struct Args {
 
     #[clap(short, long)]
     din_a4: bool,
+
+    #[clap(short, long)]
+    pdf: bool,
 }
 
 pub fn load_template<P>(path: Option<P>) -> Result<String, Box<dyn std::error::Error>>
@@ -69,5 +72,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
         .or_else(|| img_path.map(coronacard::qrdecode::decode_qr))
         .ok_or("need --code or --image")??;
-    code_to_svg(code, &args)
+    code_to_svg(code, &args)?;
+    if cfg!(feature = "pdf") {
+        if args.pdf {
+            // use svg2pdf;
+        }
+    } else {
+        if args.pdf {
+            None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
+        }
+    }
+    Ok(())
 }
