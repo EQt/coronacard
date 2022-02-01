@@ -1,4 +1,4 @@
-pub(crate) fn print_a4(card: &str) -> Result<String, Box<dyn std::error::Error>> {
+pub fn print_a4(card: &str) -> Result<String, Box<dyn std::error::Error>> {
     let print_svg = include_str!("../data/print.svg");
     let inner = xmltree::Element::parse(card.as_bytes())?;
     let mut xml = xmltree::Element::parse(print_svg.as_bytes())?;

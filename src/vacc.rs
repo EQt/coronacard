@@ -1,5 +1,5 @@
 #[derive(Debug)]
-pub(crate) struct Vacc {
+pub struct Vacc {
     name: String,
     birth: String,
     last: String,
@@ -7,7 +7,7 @@ pub(crate) struct Vacc {
 }
 
 impl Vacc {
-    pub(crate) fn to_svg(&self, mut templ: String, inner: &str) -> String {
+    pub fn to_svg(&self, mut templ: String, inner: &str) -> String {
         templ = templ.replace("@birth", &self.birth);
         templ = templ.replace("@name", &self.name);
         templ = templ.replace("@dose", &self.dose);
@@ -16,7 +16,7 @@ impl Vacc {
         templ
     }
 
-    pub(crate) fn parse(code: &str) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn parse(code: &str) -> Result<Self, Box<dyn std::error::Error>> {
         let cert = greenpass::parse(code)?;
         let pass = cert.passes.last().ok_or("no greenpass found")?;
         let birth = &pass.date_of_birth;

@@ -1,7 +1,10 @@
-pub(crate) mod qrdecode;
+pub mod qrdecode;
 pub mod qrencode;
-pub(crate) mod svg;
-pub(crate) mod vacc;
+pub mod svg;
+pub mod vacc;
+
+pub use qrencode::gen_qr_code;
+pub use vacc::Vacc;
 
 pub fn load_template<P>(path: Option<P>) -> Result<String, Box<dyn std::error::Error>>
 where

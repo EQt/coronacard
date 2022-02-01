@@ -33,7 +33,7 @@ pub(crate) fn render_svg(
     Ok(std::fs::write(
         &args.out,
         if args.din_a4 {
-            crate::svg::print_a4(&templ)?
+            coronacard::svg::print_a4(&templ)?
         } else {
             templ
         },
@@ -41,7 +41,7 @@ pub(crate) fn render_svg(
 }
 
 pub(crate) fn code_to_svg(code: &str, args: &Args) -> Result<(), Box<dyn std::error::Error>> {
-    let vac = crate::vacc::Vacc::parse(code)?;
+    let vac = coronacard::Vacc::parse(code)?;
     let qr = coronacard::gen_qr_code(code)?;
     eprint!("{vac:#?}");
     render_svg(args, &vac, &qr)?;
@@ -58,7 +58,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .code
         .as_ref()
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
-        .or_else(|| img_path.map(crate::qrdecode::decode_qr))
+        .or_else(|| img_path.map(coronacard::qrdecode::decode_qr))
         .ok_or("need --code or --image")??;
     code_to_svg(code, &args)
 }

@@ -1,4 +1,4 @@
-pub(crate) fn decode_qr<P>(path: P) -> Result<String, Box<dyn std::error::Error>>
+pub fn decode_qr<P>(path: P) -> Result<String, Box<dyn std::error::Error>>
 where
     P: AsRef<std::path::Path>,
 {
