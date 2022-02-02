@@ -1,4 +1,3 @@
-use coronacard::vacc::Vacc;
 use std::path::PathBuf;
 
 /// Certificate code to SVG converter.
@@ -26,41 +25,6 @@ struct Args {
     pdf: bool,
 }
 
-pub fn load_template<P>(path: Option<P>) -> Result<String, Box<dyn std::error::Error>>
-where
-    P: AsRef<std::path::Path>,
-{
-    Ok(path
-        .as_ref()
-        .map(std::fs::read_to_string)
-        .unwrap_or_else(|| Ok(coronacard::default_template()))?)
-}
-
-pub(crate) fn render_svg(
-    args: &Args,
-    vac: &Vacc,
-    qr: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let templ = vac.to_svg(load_template(args.template.as_ref())?, qr);
-    Ok(std::fs::write(
-        &args.out,
-        if args.din_a4 {
-            coronacard::svg::print_a4(&templ)?
-        } else {
-            templ
-        },
-    )?)
-}
-
-pub(crate) fn code_to_svg(code: &str, args: &Args) -> Result<(), Box<dyn std::error::Error>> {
-    let vac = coronacard::Vacc::parse(code)?;
-    let qr = coronacard::gen_qr_code(code)?;
-    eprint!("{vac:#?}");
-    render_svg(args, &vac, &qr)?;
-    eprintln!(" => {:?}", &args.out);
-    Ok(())
-}
-
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use clap::Parser;
 
@@ -72,7 +36,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
         .or_else(|| img_path.map(coronacard::qrdecode::decode_qr))
         .ok_or("need --code or --image")??;
-    code_to_svg(code, &args)?;
+    let vac = coronacard::Vacc::parse(code)?;
+    let qr = coronacard::gen_qr_code(code)?;
+    let svg_templ = args
+        .template
+        .as_ref()
+        .map(std::fs::read_to_string)
+        .unwrap_or_else(|| Ok(coronacard::default_template()))?;
+    eprint!("{vac:#?}");
+    let templ = vac.to_svg(svg_templ, &qr);
+    std::fs::write(
+        &args.out,
+        if args.din_a4 {
+            coronacard::svg::print_a4(&templ)?
+        } else {
+            templ
+        },
+    )?;
+    eprintln!(" => {:?}", &args.out);
     if cfg!(feature = "pdf") {
         if args.pdf {
             // use svg2pdf;
