@@ -4,7 +4,9 @@ version = "0.1.0"
 authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
 license = "MIT"
 edition = "2021"
-exclude = ["/learn", "/data", "!/data/print.svg", "!/data/template.svg"]
+exclude = ["/learn", "/data", "!/data/print.svg", "!/data/template.svg", ".gitmodules"]
+repository = "https://github.com/EQt/coronacard"
+description = "Format corona \"greencard\" information using an SVG template."
 
 [features]
 default = ["cli"]
