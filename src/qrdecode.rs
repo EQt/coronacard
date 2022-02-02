@@ -5,7 +5,7 @@ where
     decode_qr_image(&image::open(path)?)
 }
 
-pub(crate) fn decode_qr_image(
+fn decode_qr_image(
     img: &image::DynamicImage,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let img = img.to_luma8();
