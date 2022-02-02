@@ -54,14 +54,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         },
     )?;
     eprintln!(" => {:?}", &args.out);
-    if cfg!(feature = "pdf") {
-        if args.pdf {
-            // use svg2pdf;
-        }
-    } else {
-        if args.pdf {
-            None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
-        }
+    if cfg!(feature = "pdf") && args.pdf {
+        // use svg2pdf;
+    } else if args.pdf {
+        None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
     }
     Ok(())
 }
