@@ -26,3 +26,7 @@ pub(crate) fn decode_qr_image(
         _ => None.ok_or("more than one grid found")?,
     }
 }
+
+pub fn qr_from_img(buf: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
+    decode_qr_image(&image::load_from_memory(buf)?)
+}
