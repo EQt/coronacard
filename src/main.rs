@@ -45,14 +45,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| Ok(coronacard::default_template()))?;
     eprint!("{vac:#?}");
     let templ = vac.to_svg(svg_templ, &qr);
-    std::fs::write(
-        &args.out,
-        if args.din_a4 {
-            coronacard::svg::print_a4(&templ)?
-        } else {
-            templ
-        },
-    )?;
+    let templ = if args.din_a4 {
+        coronacard::svg::print_a4(&templ)?
+    } else {
+        templ
+    };
+    std::fs::write(&args.out, templ)?;
     eprintln!(" => {:?}", &args.out);
     if cfg!(feature = "pdf") && args.pdf {
         // use svg2pdf;

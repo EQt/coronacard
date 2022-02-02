@@ -5,7 +5,9 @@ where
     decode_qr_image(&image::open(path)?)
 }
 
-pub(crate) fn decode_qr_image(img: &image::DynamicImage) -> Result<String, Box<dyn std::error::Error>> {
+pub(crate) fn decode_qr_image(
+    img: &image::DynamicImage,
+) -> Result<String, Box<dyn std::error::Error>> {
     let img = img.to_luma8();
     // Prepare for detection
     let mut img = rqrr::PreparedImage::prepare_from_greyscale(
