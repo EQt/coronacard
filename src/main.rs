@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .code
         .as_ref()
         .map(|c| Ok(c.trim_start_matches("QR-Code:").to_string()))
-        .or_else(|| img_path.map(coronacard::qrdecode::decode_qr))
+        .or_else(|| img_path.map(coronacard::qrdecode::qr_from_path))
         .ok_or("need --code or --image")??;
     let vac = coronacard::Vacc::parse(code)?;
     let qr = coronacard::gen_qr_code(code)?;
