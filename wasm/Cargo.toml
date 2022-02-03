@@ -13,3 +13,6 @@ coronacard = { path = "..", default-features = false }
 
 [lib]
 crate-type = ["cdylib"]
+
+[dev-dependencies]
+wasm-bindgen-test = "0.2"
