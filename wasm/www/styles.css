@@ -13,6 +13,11 @@ body,html {
 }
 
 #formContainer {
-    width: 400px;
+    max-width: 400px;
+    width: 95%;
     min-width: 330px;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Choose File" !important;
 }
