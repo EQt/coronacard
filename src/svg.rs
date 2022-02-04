@@ -15,3 +15,14 @@ pub fn print_a4(card: &str) -> Result<String, Box<dyn std::error::Error>> {
     xml.write(&mut out)?;
     Ok(String::from_utf8(out)?)
 }
+
+#[cfg(feature = "pdf")]
+pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    Ok(svg2pdf::convert_str(svg, svg2pdf::Options::default())?)
+}
+
+#[cfg(not(feature = "pdf"))]
+pub fn to_pdf(_svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
+    Ok(vec![])
+}

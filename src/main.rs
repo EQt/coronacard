@@ -52,7 +52,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     std::fs::write(&args.out, &templ)?;
     eprintln!(" => {:?}", &args.out);
-    if cfg!(feature = "pdf") && args.pdf {
+    if args.pdf {
         let basename: &str = args
             .out
             .as_path()
@@ -60,11 +60,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .ok_or("Path is not valid unicode")?
             .trim_end_matches(".svg");
         let pdf_out = format!("{basename}.pdf");
-        let pdf = svg2pdf::convert_str(&templ, svg2pdf::Options::default()).unwrap();
         eprintln!("  => {:?}", &pdf_out);
+        let pdf = coronacard::svg::to_pdf(&templ)?;
         std::fs::write(pdf_out, pdf)?;
-    } else if args.pdf {
-        None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
     }
     Ok(())
 }

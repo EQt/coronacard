@@ -9,7 +9,7 @@ repository = "https://github.com/EQt/coronacard"
 description = "Format corona \"greencard\" information using an SVG template."
 
 [features]
-default = ["cli"]
+default = ["cli", "pdf"]
 cli = ["clap"]
 pdf = ["svg2pdf"]
 
