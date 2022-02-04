@@ -7,7 +7,7 @@ pub fn gen_svg(img: &[u8], din_a4: bool) -> Vec<u8> {
         Err(_) => return vec![],
     };
     match coronacard::svg_from_code(&code, din_a4) {
-        Ok(svg) => svg.into_bytes(),
+        Ok(svg) => svg,
         Err(_) => vec![],
     }
 }

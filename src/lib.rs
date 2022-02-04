@@ -13,19 +13,20 @@ pub fn default_template() -> String {
 
 pub fn svg_with_templ(
     code: &str,
-    din_a4: bool,
+    pdf: bool,
     templ: String,
-) -> Result<String, Box<dyn std::error::Error>> {
+) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let vac = Vacc::parse(code)?;
-    let _qrsvg = gen_qr_code(code)?;
+    let qrsvg = gen_qr_code(code)?;
     let templ = vac.to_svg(templ);
-    Ok(if din_a4 {
-        svg::print_a4(&templ)?
+    let templ: String = svg::replace_rect(templ, &qrsvg)?;
+    Ok(if pdf {
+        svg::to_pdf(&templ)?
     } else {
-        templ
+        templ.into_bytes()
     })
 }
 
-pub fn svg_from_code(code: &str, din_a4: bool) -> Result<String, Box<dyn std::error::Error>> {
+pub fn svg_from_code(code: &str, din_a4: bool) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     svg_with_templ(code, din_a4, default_template())
 }
