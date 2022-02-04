@@ -2,6 +2,8 @@
 
 [![License: MIT][l]](LICENSE.md)
 
+![Logo](wasm/www/logo.svg)
+
 Format corona "greencard" information using an [SVG template][1].
 When printed it should suffice to proof that you are vaccinated against COVID-19.
 
