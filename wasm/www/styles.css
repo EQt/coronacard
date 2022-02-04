@@ -4,5 +4,6 @@ body,html {
 }
 
 #formContainer {
-    width: 60%;
+    width: 40%;
+    min-width: 330px;
 }
