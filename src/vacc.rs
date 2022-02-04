@@ -7,12 +7,11 @@ pub struct Vacc {
 }
 
 impl Vacc {
-    pub fn to_svg(&self, mut templ: String, inner: &str) -> String {
+    pub fn to_svg(&self, mut templ: String) -> String {
         templ = templ.replace("@birth", &self.birth);
         templ = templ.replace("@name", &self.name);
         templ = templ.replace("@dose", &self.dose);
         templ = templ.replace("@lastvacc", &self.last);
-        templ = templ.replace("<text>@inner</text>", inner);
         templ
     }
 

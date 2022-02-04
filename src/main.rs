@@ -44,7 +44,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map(std::fs::read_to_string)
         .unwrap_or_else(|| Ok(coronacard::default_template()))?;
     eprint!("{vac:#?}");
-    let templ = vac.to_svg(svg_templ, &qr);
+    let templ = vac.to_svg(svg_templ);
+    let templ: String = coronacard::svg::replace_rect(templ, &qr)?;
     let templ = if args.din_a4 {
         coronacard::svg::print_a4(&templ)?
     } else {

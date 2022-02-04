@@ -17,8 +17,8 @@ pub fn svg_with_templ(
     templ: String,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let vac = Vacc::parse(code)?;
-    let qrsvg = gen_qr_code(code)?;
-    let templ = vac.to_svg(templ, &qrsvg);
+    let _qrsvg = gen_qr_code(code)?;
+    let templ = vac.to_svg(templ);
     Ok(if din_a4 {
         svg::print_a4(&templ)?
     } else {

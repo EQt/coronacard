@@ -1,5 +1,5 @@
 <svg height="82mm" viewBox="0 0 200.31496 309.92128" width="53mm" xmlns="http://www.w3.org/2000/svg">
-  <text>@inner</text>
+  <rect fill="#111111" width="51mm" height="51mm" x="1mm" y="1mm" id="@qr"/>
   <text font-family="Arial" font-size="8" x="53.422554" y="205.35767"><tspan x="53.422554" y="205.35767">Scan mit CovPassCheck-App</tspan></text>
   <text font-family="Arial" font-size="8" transform="translate(-68.775787 -10.192031)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">Name</tspan></text>
   <text font-family="Arial" font-size="11" font-weight="bold" transform="translate(-68.175787 5.162532)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">@name</tspan></text>
