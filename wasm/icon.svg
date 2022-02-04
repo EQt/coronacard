@@ -39,20 +39,21 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:1.52813;stroke-opacity:1;stop-color:#000000"
-       id="rect936"
-       width="47.001717"
-       height="4.4992023"
-       x="0.49131167"
-       y="14.472771" />
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.7;stroke-opacity:1;stop-color:#000000;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#db8a3d;fill-opacity:1;stroke:#000000;stroke-width:1.6791;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
        id="rect31"
-       width="46.859535"
-       height="31.337627"
-       x="0.59278351"
-       y="9.4016323"
-       ry="6.2070446" />
+       width="45.697571"
+       height="31.348919"
+       x="1.1119829"
+       y="9.3959866"
+       ry="6.2070446"
+       rx="6.2070446" />
+    <rect
+       style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:1.5506;stroke-opacity:1;stop-color:#000000"
+       id="rect936"
+       width="44.188545"
+       height="4.9273553"
+       x="1.8194888"
+       y="14.044618" />
     <g
        id="g15770"
        transform="matrix(1.1035455,-0.3134462,0.31889512,1.0938094,-10.993582,1.2975995)">
