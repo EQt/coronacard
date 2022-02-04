@@ -19,7 +19,7 @@ pub fn gen_qr_code(code: &str) -> Result<String, Box<dyn std::error::Error>> {
     use qrcode::QrCode;
 
     fix_svg_header(
-        &QrCode::new(code)?
+        &QrCode::with_error_correction_level(code, qrcode::EcLevel::L)?
             .render()
             .min_dimensions(200, 200)
             .dark_color(svg::Color("#000000"))
