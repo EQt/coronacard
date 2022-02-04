@@ -38,7 +38,7 @@ pub fn to_pdf(_svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
 }
 
 pub fn replace_rect(templ: String, qr: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let mut xqr = xmltree::Element::parse(qr.as_bytes())?;
+    let xqr = xmltree::Element::parse(qr.as_bytes())?;
     let mut xml = xmltree::Element::parse(templ.as_bytes())?;
     xml.children.iter_mut().for_each(|tag| {
         if let xmltree::XMLNode::Element(rect) = tag {
@@ -47,10 +47,10 @@ pub fn replace_rect(templ: String, qr: &str) -> Result<String, Box<dyn std::erro
                     rect.attributes.remove("id");
                     rect.name = "svg".into();
                     rect.attributes.remove("fill");
-                    if let Some(vb) = xqr.attributes.remove("viewBox") {
-                        rect.attributes.insert("viewBox".into(), vb);
+                    if let Some(vb) = xqr.attributes.get("viewBox") {
+                        rect.attributes.insert("viewBox".into(), vb.into());
                     }
-                    rect.children = xqr.children.drain(..).collect();
+                    rect.children = xqr.children.clone();
                 }
             }
         }
