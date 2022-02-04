@@ -1,7 +1,4 @@
 <svg height="82mm" viewBox="0 0 200.31496 309.92128" width="53mm" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style type="text/css">@import url(//db.onlinewebfonts.com/c/8d223b3ad8d4819e9dcf22757e4cc2c4?family=Arial);</style>
-  </defs>
   <text>@inner</text>
   <text font-family="Arial" font-size="8" x="53.422554" y="205.35767"><tspan x="53.422554" y="205.35767">Scan mit CovPassCheck-App</tspan></text>
   <text font-family="Arial" font-size="8" transform="translate(-68.775787 -10.192031)" x="79.282852" y="241.41782"><tspan x="79.282852" y="241.41782">Name</tspan></text>
