@@ -18,7 +18,15 @@ pub fn print_a4(card: &str) -> Result<String, Box<dyn std::error::Error>> {
 
 #[cfg(feature = "pdf")]
 pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
-    Ok(svg2pdf::convert_str(svg, svg2pdf::Options::default())?)
+    let fontdb = {
+        let mut db = fontdb::Database::new();
+        db.load_system_fonts();
+        db
+    };
+    let options = usvg::Options { fontdb, ..Default::default()};
+    let tree = usvg::Tree::from_str(svg, &options.to_ref())?;
+    let pdf = svg2pdf::convert_tree(&tree, svg2pdf::Options::default());
+    Ok(pdf)
 }
 
 #[cfg(not(feature = "pdf"))]

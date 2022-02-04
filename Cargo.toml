@@ -11,7 +11,7 @@ description = "Format corona \"greencard\" information using an SVG template."
 [features]
 default = ["cli", "pdf"]
 cli = ["clap"]
-pdf = ["svg2pdf"]
+pdf = ["svg2pdf", "usvg", "fontdb"]
 
 [dependencies]
 greenpass = { version = "0.2.0", default-features = false }
@@ -21,6 +21,13 @@ image = { version = "0.23.14", default-features = false, features = ["png", "jpe
 qrcode = { version = "0.12.0", default-features = false, features = ["svg"] }
 rqrr = { version = "0.4.0", default-features = false }
 svg2pdf = { version = "0.2.1", default-features = false, optional = true }
+usvg = { version = "0.20", default-features = false, optional = true, features = ["text"] }
+
+[dependencies.fontdb]
+version = "0.7"
+optional = true
+default-features = false
+features = ["fs", "memmap"]
 
 [profile.release]
 lto = "fat"
