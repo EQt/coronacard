@@ -43,17 +43,15 @@ pub fn replace_rect(templ: String, qr: &str) -> Result<String, Box<dyn std::erro
     let xqr = xmltree::Element::parse(qr.as_bytes())?;
     let mut xml = xmltree::Element::parse(templ.as_bytes())?;
     xml.children.iter_mut().for_each(|tag| {
-        if let xmltree::XMLNode::Element(rect) = tag {
-            if &rect.name == "rect" {
-                if Some("@qr") == rect.attributes.get("id").map(|i| &**i) {
-                    rect.attributes.remove("id");
-                    rect.name = "svg".into();
-                    rect.attributes.remove("fill");
-                    if let Some(vb) = xqr.attributes.get("viewBox") {
-                        rect.attributes.insert("viewBox".into(), vb.into());
-                    }
-                    rect.children = xqr.children.clone();
+        if let xmltree::XMLNode::Element(e) = tag {
+            if &e.name == "rect" && Some("@qr") == e.attributes.get("id").map(|i| &**i) {
+                e.attributes.remove("id");
+                e.name = "svg".into();
+                e.attributes.remove("fill");
+                if let Some(vb) = xqr.attributes.get("viewBox") {
+                    e.attributes.insert("viewBox".into(), vb.into());
                 }
+                e.children = xqr.children.clone();
             }
         }
     });
