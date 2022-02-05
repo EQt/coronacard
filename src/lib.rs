@@ -11,6 +11,10 @@ pub fn default_template() -> String {
     include_str!("../data/template.svg").into()
 }
 
+pub fn default_a4_template() -> String {
+    include_str!("../data/print.svg").into()
+}
+
 pub fn svg_with_templ(
     code: &str,
     pdf: bool,
