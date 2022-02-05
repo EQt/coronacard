@@ -9,7 +9,11 @@ description = "WASM bindings to coronacard."
 
 [dependencies]
 wasm-bindgen = "0.2"
-coronacard = { path = "..", default-features = false, features = ["pdf"] }
+
+[dependencies.coronacard]
+path = ".."
+default-features = false
+features = ["pdf"]
 
 [lib]
 crate-type = ["cdylib"]
