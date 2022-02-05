@@ -41,16 +41,15 @@ export function convert() {
         });
         promise.then(function (bytesArr) {
             console.log(`run wasm (${selectedFile})`);
-            let f = gen_svg(bytesArr, true);
-            console.log("Done");
-            let blob = new Blob([f.content()], { type: f.mimetype() });
-            let output_filename = "corona_card.pdf";
+            const f = gen_svg(bytesArr, true);
+            const blob = new Blob([f.content()], { type: f.mimetype() });
+            const output_filename = "corona_card.pdf";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
         }).catch(function (err) {
             console.log(err);
-            alert(":( Error occured, please reload and try again.");
+            alert(`Error: ${err}`)
             convertButtonElement.innerHTML = "Convert";
         });
         console.log("Done!")
