@@ -39,22 +39,34 @@ pub fn to_pdf(_svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     Ok(vec![])
 }
 
+fn replace_rect_elem(e: &mut xmltree::Element, xqr: &xmltree::Element) {
+    if &e.name == "rect" {
+        if Some("@qr") == e.attributes.get("id").map(|i| &**i) {
+            e.attributes.remove("id");
+            e.name = "svg".into();
+            e.attributes.remove("fill");
+            if let Some(vb) = xqr.attributes.get("viewBox") {
+                e.attributes.insert("viewBox".into(), vb.into());
+            }
+            e.children = xqr.children.clone();
+        }
+    } else {
+        replace_rect_rec(e, xqr);
+    }
+}
+
+fn replace_rect_rec(xml: &mut xmltree::Element, xqr: &xmltree::Element) {
+    xml.children.iter_mut().for_each(|xml| {
+        if let Some(e) = xml.as_mut_element() {
+            replace_rect_elem(e, xqr);
+        }
+    });
+}
+
 pub fn replace_rect(templ: String, qr: &str) -> Result<String, Box<dyn std::error::Error>> {
     let xqr = xmltree::Element::parse(qr.as_bytes())?;
     let mut xml = xmltree::Element::parse(templ.as_bytes())?;
-    xml.children.iter_mut().for_each(|tag| {
-        if let xmltree::XMLNode::Element(e) = tag {
-            if &e.name == "rect" && Some("@qr") == e.attributes.get("id").map(|i| &**i) {
-                e.attributes.remove("id");
-                e.name = "svg".into();
-                e.attributes.remove("fill");
-                if let Some(vb) = xqr.attributes.get("viewBox") {
-                    e.attributes.insert("viewBox".into(), vb.into());
-                }
-                e.children = xqr.children.clone();
-            }
-        }
-    });
+    replace_rect_rec(&mut xml, &xqr);
     let mut out = Vec::new();
     xml.write(&mut out)?;
     Ok(String::from_utf8(out)?)
