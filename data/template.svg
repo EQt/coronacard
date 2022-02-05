@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <svg xmlns="http://www.w3.org/2000/svg" height="82mm" viewBox="0 0 200.31496 309.92128" width="53mm">
   <rect fill="#111111" width="51mm" height="51mm" x="1mm" y="1mm" id="@qr"/>
   <g font-family="Arial">
@@ -6,33 +5,33 @@
       <text x="53.422554" y="205.35767">
         <tspan>Scan mit CovPassCheck-App</tspan>
       </text>
-      <text transform="translate(-68.775787 -10.192031)" x="79.282852" y="241.41782">
+      <text x="10.507" y="231.23">
         <tspan>Name</tspan>
       </text>
-      <text transform="translate(-68.039797 27.045334)" x="79.282852" y="241.41782">
+      <text x="11.243" y="268.46">
         <tspan>Letzte Impfung/</tspan>
-        <tspan x="79.282852" y="251.41782">Last Vaccination</tspan>
+        <tspan x="11.243" y="278.46">Last Vaccination</tspan>
       </text>
-      <text transform="translate(24.778676 -11.588031)" x="79.282852" y="241.41782">
+      <text x="104.06" y="229.83">
         <tspan>Geburtstag/Date of Birth</tspan>
       </text>
-      <text transform="translate(44.799619 27.045334)" x="79.282852" y="241.41782">
+      <text x="124.08" y="268.46">
         <tspan>Anzahl Impfungen/</tspan>
-        <tspan x="79.282852" y="251.41782">Number of Doses</tspan>
+        <tspan x="124.08" y="278.46">Number of Doses</tspan>
       </text>
     </g>
-    <text font-size="11" font-weight="bold" transform="translate(-68.175787 5.162532)" x="79.282852" y="241.41782">
+    <text font-size="11" font-weight="bold" x="11.107" y="246.58">
       <tspan>@name</tspan>
     </text>
     <g font-size="12" font-weight="bold">
-      <text text-anchor="end" transform="translate(49.117734 5.162532)" x="142.37883" y="241.41782">
-        <tspan x="142.37883" y="241.41782">@birth</tspan>
+      <text text-anchor="end" x="191.5" y="246.58">
+        <tspan x="191.5" y="246.58">@birth</tspan>
       </text>
-      <text transform="translate(-67.763797 54.83924)" x="79.282852" y="241.41782">
-        <tspan x="79.282852" y="241.41782">@lastvacc</tspan>
+      <text x="11.519" y="296.26">
+        <tspan x="11.519" y="296.26">@lastvacc</tspan>
       </text>
-      <text text-anchor="end" transform="translate(91.050946 54.36524)" x="97.834846" y="241.41782">
-        <tspan x="97.834846" y="241.41782">@dose</tspan>
+      <text text-anchor="end" x="188.89" y="295.78">
+        <tspan x="188.89" y="295.78">@dose</tspan>
       </text>
     </g>
   </g>
