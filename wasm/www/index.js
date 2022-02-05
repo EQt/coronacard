@@ -41,9 +41,9 @@ export function convert() {
         });
         promise.then(function (bytesArr) {
             console.log(`run wasm (${selectedFile})`);
-            let retBytes = gen_svg(bytesArr, true);
+            let f = gen_svg(bytesArr, true);
             console.log("Done");
-            let blob = new Blob([retBytes], { type: "application/pdf" });
+            let blob = new Blob([f.content()], { type: f.mimetype() });
             let output_filename = "corona_card.pdf";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
