@@ -7,3 +7,5 @@ license = "MIT"
 
 
 [dependencies]
+fontdb = "0.7.0"
+
