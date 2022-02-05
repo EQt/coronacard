@@ -11,7 +11,7 @@ description = "Format corona \"greencard\" information using an SVG template."
 [features]
 default = ["cli", "pdf"]
 cli = ["clap"]
-pdf = ["svg2pdf", "usvg", "fontdb"]
+pdf = ["svg2pdf", "usvg", "fontdb", "arial"]
 
 [dependencies]
 greenpass = { version = "0.2.0", default-features = false }
@@ -29,13 +29,17 @@ optional = true
 default-features = false
 features = ["fs", "memmap"]
 
+[dependencies.arial]
+path = "arial"
+optional = true
+
 [profile.release]
 lto = "fat"
 codegen-units = 1
 opt-level = "s"
 
 [workspace]
-members = ["wasm"]
+members = ["wasm", "arial"]
 
 [[bin]]
 name = "coronacard"

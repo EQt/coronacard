@@ -1,0 +1,9 @@
+[package]
+name = "arial"
+version = "0.1.0"
+edition = "2021"
+authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
+license = "MIT"
+
+
+[dependencies]
