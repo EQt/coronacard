@@ -19,7 +19,13 @@ pub fn print_a4(card: &str) -> Result<String, Box<dyn std::error::Error>> {
 pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     let fontdb = {
         let mut db = fontdb::Database::new();
-        db.load_system_fonts();
+        db.load_font_data(
+            include_bytes!("/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf")[..].into(),
+        );
+        db.load_font_data(
+            include_bytes!("/usr/share/fonts/truetype/msttcorefonts/Arial.ttf")[..].into(),
+        );
+        assert_eq!(db.len(), 2);
         db
     };
     let options = usvg::Options {
