@@ -18,28 +18,21 @@ export function convert() {
     console.log("Convert button pressed!");
     let convertButtonElement = document.getElementById('convertButton');
     let selectedFile = document.getElementById('imageInputFile').files[0];
-    let inputFileExtension = ".png";
-    let outFiletypeElement = document.getElementById('inlineFormCustomSelectPref');
     console.log(`Selected file: ${selectedFile}`);
     if (selectedFile === undefined) {
         alert("Please select your file first!");
         return;
     } else {
         convertButtonElement.innerHTML = 'Computing...';
-        let fileData = new Blob([selectedFile]);
+        const fileData = new Blob([selectedFile]);
 
-        // returns a byte array of file contents
-        let promise = new Promise(function (resolve) {
+        new Promise(function (resolve) {
             let reader = new FileReader();
             reader.readAsArrayBuffer(fileData);
             reader.onload = function (e) {
-                let arrayBuffer = e.target.result;
-                console.log(arrayBuffer);
-                let bytes = new Uint8Array(arrayBuffer);
-                resolve(bytes);
+                resolve(new Uint8Array(e.target.result));
             }
-        });
-        promise.then(function (bytesArr) {
+        }).then(function (bytesArr) {
             console.log(`run wasm (${selectedFile})`);
             const f = gen_svg(bytesArr, true);
             const blob = new Blob([f.content()], { type: f.mimetype() });
