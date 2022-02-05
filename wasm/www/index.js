@@ -43,8 +43,8 @@ export function convert() {
             console.log(`run wasm (${selectedFile})`);
             let retBytes = gen_svg(bytesArr, true);
             console.log("Done");
-            let blob = new Blob([retBytes], { type: "image/svg+xml" });
-            let output_filename = "corona_card.svg";
+            let blob = new Blob([retBytes], { type: "application/pdf" });
+            let output_filename = "corona_card.pdf";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
