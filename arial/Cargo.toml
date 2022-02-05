@@ -6,6 +6,6 @@ authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
 license = "MIT"
 
 
-[dependencies]
+[build-dependencies]
 fontdb = "0.7.0"
 

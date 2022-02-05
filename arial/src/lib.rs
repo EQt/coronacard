@@ -1,5 +1,4 @@
-const ARIAL_REGU: &[u8] = include_bytes!("/usr/share/fonts/truetype/msttcorefonts/Arial.ttf");
-const ARIAL_BOLD: &[u8] = include_bytes!("/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf");
+include!(concat!(env!("OUT_DIR"), "/consts.rs"));
 
 /// Load Arial regular font face (TrueType format).
 pub fn regular_ttf() -> Vec<u8> {
