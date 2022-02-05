@@ -3,9 +3,8 @@ name = "arial"
 version = "0.1.0"
 edition = "2021"
 authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
+description = "Find the systems's Arial true-type font files."
 license = "MIT"
 
-
 [build-dependencies]
-fontdb = "0.7.0"
-
+fontdb = { version = "0.7.0", default-features = false, features = ["fs"] }
