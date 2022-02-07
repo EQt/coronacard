@@ -24,10 +24,13 @@ impl File {
 pub fn gen_svg(img: &[u8], din_a4: bool) -> Result<File, JsValue> {
     let code = match coronacard::qr_from_img(img) {
         Ok(code) => code,
-        Err(e) => return Err(format!("Could not read QR code: {e}").into())
+        Err(e) => return Err(format!("Could not read QR code: {e}").into()),
     };
     match coronacard::svg_with_templ(&code, din_a4, coronacard::default_a4_template()) {
-        Ok(svg) => Ok(File {content: svg, mimetype: "application/pdf".into()}),
-        Err(e) => Err(format!("{e}").into())
+        Ok(svg) => Ok(File {
+            content: svg,
+            mimetype: "application/pdf".into(),
+        }),
+        Err(e) => Err(format!("{e}").into()),
     }
 }
