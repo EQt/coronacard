@@ -6,6 +6,30 @@ pub struct Vacc {
     dose: String,
 }
 
+pub enum VaccErr {
+    InvalidCode(String),
+    NoGreenPass,
+    NoCertificate,
+}
+
+impl std::fmt::Display for VaccErr {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
+    }
+}
+
+impl std::fmt::Debug for VaccErr {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::InvalidCode(c) => write!(f, "could not decode {c}"),
+            Self::NoGreenPass => write!(f, "no greenpass found"),
+            Self::NoCertificate => write!(f, "no valid certificate found"),
+        }
+    }
+}
+
+impl std::error::Error for VaccErr {}
+
 impl Vacc {
     pub fn to_svg(&self, mut templ: String) -> String {
         templ = templ.replace("@birth", &self.birth);
@@ -15,12 +39,12 @@ impl Vacc {
         templ
     }
 
-    pub fn parse(code: &str) -> Result<Self, Box<dyn std::error::Error>> {
-        let cert = greenpass::parse(code)?;
-        let pass = cert.passes.last().ok_or("no greenpass found")?;
+    pub fn parse(code: &str) -> Result<Self, VaccErr> {
+        let cert = greenpass::parse(code).or_else(|_| Err(VaccErr::InvalidCode(code.into())))?;
+        let pass = cert.passes.last().ok_or(VaccErr::NoGreenPass)?;
         let birth = &pass.date_of_birth;
         let name = format!("{}, {}", pass.surname, pass.givenname);
-        match pass.entries.last().ok_or("no vaccine entries found")? {
+        match pass.entries.last().ok_or(VaccErr::NoCertificate)? {
             greenpass::CertInfo::Recovery(_) => todo!(),
             greenpass::CertInfo::Test(_) => todo!(),
             greenpass::CertInfo::Vaccine(vac) => Ok(Self {
