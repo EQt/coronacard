@@ -46,11 +46,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     eprint!("{vac:#?}");
     let templ = vac.to_svg(svg_templ);
     let templ: String = coronacard::svg::replace_rect(templ, &qr)?;
-    let templ = if args.din_a4 {
-        coronacard::svg::print_a4(&templ)?
-    } else {
-        templ
-    };
     std::fs::write(&args.out, &templ)?;
     eprintln!(" => {:?}", &args.out);
     if args.pdf {
