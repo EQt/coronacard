@@ -45,15 +45,23 @@ impl Vacc {
         let pass = cert.passes.last().ok_or(VaccErr::NoGreenPass)?;
         let birth = &pass.date_of_birth;
         let name = format!("{}, {}", pass.surname, pass.givenname);
-        match pass.entries.last().ok_or(VaccErr::NoCertificate)? {
-            greenpass::CertInfo::Recovery(_) => todo!(),
-            greenpass::CertInfo::Test(_) => todo!(),
+        match pass
+            .entries
+            .iter()
+            .filter(|&e| match e {
+                greenpass::CertInfo::Vaccine(_) => true,
+                _ => false,
+            })
+            .last()
+            .ok_or(VaccErr::NoCertificate)?
+        {
             greenpass::CertInfo::Vaccine(vac) => Ok(Self {
                 name,
                 dose: format!("{}/{}", &vac.dose_number, vac.dose_total),
                 last: format!("{}", &vac.date),
                 birth: birth.to_owned(),
             }),
+            _ => unreachable!(),
         }
     }
 }
