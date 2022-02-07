@@ -48,10 +48,7 @@ impl Vacc {
         match pass
             .entries
             .iter()
-            .filter(|&e| match e {
-                greenpass::CertInfo::Vaccine(_) => true,
-                _ => false,
-            })
+            .filter(|&e| matches!(e, greenpass::CertInfo::Vaccine(_)))
             .last()
             .ok_or(VaccErr::NoCertificate)?
         {

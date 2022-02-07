@@ -6,14 +6,11 @@ fn find_font(db: &fontdb::Database, name: &str, weight: fontdb::Weight) -> Optio
         weight,
         ..Default::default()
     };
-    match db.query(&query) {
-        Some(id) => {
-            let (src, _index) = db.face_source(id).unwrap();
-            if let fontdb::Source::File(ref path) = &src {
-                return Some(path.clone());
-            }
+    if let Some(id) = db.query(&query) {
+        let (src, _index) = db.face_source(id).unwrap();
+        if let fontdb::Source::File(ref path) = &src {
+            return Some(path.clone());
         }
-        _ => (),
     };
     None
 }
