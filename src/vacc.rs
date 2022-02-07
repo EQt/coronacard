@@ -40,7 +40,7 @@ impl Vacc {
     }
 
     pub fn parse(code: &str) -> Result<Self, VaccErr> {
-        let cert = greenpass::parse(code).or_else(|_| Err(VaccErr::InvalidCode(code.into())))?;
+        let cert = greenpass::parse(code).map_err(|_| VaccErr::InvalidCode(code.into()))?;
         let pass = cert.passes.last().ok_or(VaccErr::NoGreenPass)?;
         let birth = &pass.date_of_birth;
         let name = format!("{}, {}", pass.surname, pass.givenname);

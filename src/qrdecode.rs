@@ -45,7 +45,7 @@ fn decode_qr_image(img: &image::DynamicImage) -> Result<String, QrErr> {
             // Decode the grid
             let (_meta, content) = grid
                 .decode()
-                .or_else(|e| Err(QrErr::DecodeError(format!("{e:?}"))))?;
+                .map_err(|e| QrErr::DecodeError(format!("{e:?}")))?;
             Ok(content)
         }
         [] => Err(QrErr::NoGridFound),
@@ -55,6 +55,6 @@ fn decode_qr_image(img: &image::DynamicImage) -> Result<String, QrErr> {
 
 pub fn qr_from_img(buf: &[u8]) -> Result<String, QrErr> {
     decode_qr_image(
-        &image::load_from_memory(buf).or_else(|err| Err(QrErr::ImageRead(format!("{err:?}"))))?,
+        &image::load_from_memory(buf).map_err(|err| QrErr::ImageRead(format!("{err:?}")))?,
     )
 }
