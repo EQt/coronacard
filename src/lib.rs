@@ -50,7 +50,7 @@ impl std::error::Error for Error {
     }
 }
 
-pub fn svg_with_templ(code: &str, pdf: bool, templ: String) -> Result<Vec<u8>, Error> {
+pub fn card_with_templ(code: &str, pdf: bool, templ: String) -> Result<Vec<u8>, Error> {
     let vac = Vacc::parse(code).map_err(Error::Vacc)?;
     let qrsvg = gen_qr_code(code).map_err(Error::GenQr)?;
     let templ = vac.to_svg(templ);
@@ -62,6 +62,6 @@ pub fn svg_with_templ(code: &str, pdf: bool, templ: String) -> Result<Vec<u8>, E
     })
 }
 
-pub fn svg_from_code(code: &str, din_a4: bool) -> Result<Vec<u8>, Error> {
-    svg_with_templ(code, din_a4, default_template())
+pub fn card_from_code(code: &str, din_a4: bool) -> Result<Vec<u8>, Error> {
+    card_with_templ(code, din_a4, default_template())
 }

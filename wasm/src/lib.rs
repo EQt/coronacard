@@ -26,7 +26,7 @@ pub fn gen_card(img: &[u8], din_a4: bool) -> Result<File, JsValue> {
         Ok(code) => code,
         Err(e) => return Err(format!("Could not read QR code: {e}").into()),
     };
-    match coronacard::svg_with_templ(&code, din_a4, coronacard::default_a4_template()) {
+    match coronacard::card_with_templ(&code, din_a4, coronacard::default_a4_template()) {
         Ok(svg) => Ok(File {
             content: svg,
             mimetype: "application/pdf".into(),
