@@ -15,10 +15,13 @@ pub enum QrErr {
 impl std::fmt::Debug for QrErr {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::NoGridFound => write!(f, "no qr code (grid) found"),
-            Self::MultipleQr => write!(f, "multiple qr codes found"),
-            Self::DecodeError(msg) => write!(f, "could not decode: {msg}"),
-            Self::ImageRead(msg) => write!(f, "could not read image: {msg}"),
+            Self::NoGridFound => write!(f, "No qr code (grid) found"),
+            Self::MultipleQr => write!(f, "Multiple qr codes found"),
+            Self::DecodeError(msg) => write!(f, "Could not decode:\n{msg}"),
+            Self::ImageRead(msg) => {
+                writeln!(f, "Could not read image:\n{msg}")?;
+                write!(f, "Only PNG and JPEG format is supported.")
+            }
         }
     }
 }
