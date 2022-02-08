@@ -6,7 +6,7 @@ pub struct File {
     pub content: Vec<u8>,
 
     #[wasm_bindgen(skip)]
-    pub mimetype: String,
+    pub mimetype: &'static str,
 }
 
 #[wasm_bindgen]
@@ -16,7 +16,7 @@ impl File {
     }
 
     pub fn mimetype(&self) -> String {
-        self.mimetype.clone()
+        self.mimetype.to_string()
     }
 }
 
@@ -35,7 +35,7 @@ pub fn gen_card(img: &[u8], din_a4: bool) -> Result<File, JsValue> {
     match coronacard::card_with_templ(&code, pdf, templ) {
         Ok(card) => Ok(File {
             content: card,
-            mimetype: if pdf { "application/pdf" } else { "image/svg+xml" }.into(),
+            mimetype: if pdf { "application/pdf" } else { "image/svg+xml" },
         }),
         Err(e) => Err(format!("{e}").into()),
     }
