@@ -51,12 +51,12 @@ impl std::error::Error for Error {
 }
 
 pub fn svg_with_templ(code: &str, pdf: bool, templ: String) -> Result<Vec<u8>, Error> {
-    let vac = Vacc::parse(code).map_err(|e| Error::Vacc(e))?;
-    let qrsvg = gen_qr_code(code).map_err(|e| Error::GenQr(e))?;
+    let vac = Vacc::parse(code).map_err(Error::Vacc)?;
+    let qrsvg = gen_qr_code(code).map_err(Error::GenQr)?;
     let templ = vac.to_svg(templ);
-    let templ: String = svg::replace_rect(templ, &qrsvg).map_err(|e| Error::GenSvg(e))?;
+    let templ: String = svg::replace_rect(templ, &qrsvg).map_err(Error::GenSvg)?;
     Ok(if pdf {
-        svg::to_pdf(&templ).map_err(|e| Error::GenPdf(e))?
+        svg::to_pdf(&templ).map_err(Error::GenPdf)?
     } else {
         templ.into_bytes()
     })
