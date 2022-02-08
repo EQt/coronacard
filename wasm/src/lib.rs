@@ -21,7 +21,7 @@ impl File {
 }
 
 #[wasm_bindgen]
-pub fn gen_svg(img: &[u8], din_a4: bool) -> Result<File, JsValue> {
+pub fn gen_card(img: &[u8], din_a4: bool) -> Result<File, JsValue> {
     let code = match coronacard::qr_from_img(img) {
         Ok(code) => code,
         Err(e) => return Err(format!("Could not read QR code: {e}").into()),
