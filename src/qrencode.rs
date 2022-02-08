@@ -56,17 +56,17 @@ impl std::error::Error for QrEncErr {
     }
 }
 
+/// Generate a QR code as SVG.
 pub fn gen_qr_code(code: &str) -> Result<String, QrEncErr> {
     use qrcode::render::svg;
     use qrcode::QrCode;
 
-    fix_svg_header(
-        &QrCode::with_error_correction_level(code, qrcode::EcLevel::L)
-            .map_err(|e| QrEncErr::Encode(code.into(), Box::new(e)))?
-            .render()
-            .min_dimensions(200, 200)
-            .dark_color(svg::Color("#000000"))
-            .light_color(svg::Color("#ffffff"))
-            .build(),
-    )
+    let svg = QrCode::with_error_correction_level(code, qrcode::EcLevel::L)
+        .map_err(|e| QrEncErr::Encode(code.into(), e.into()))?
+        .render()
+        .min_dimensions(200, 200)
+        .dark_color(svg::Color("#000000"))
+        .light_color(svg::Color("#ffffff"))
+        .build();
+    fix_svg_header(&svg)
 }
