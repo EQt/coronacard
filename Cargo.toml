@@ -46,3 +46,7 @@ members = ["wasm", "arial"]
 [[bin]]
 name = "coronacard"
 required-features = ["cli"]
+
+[dev-dependencies]
+qrcode-png = "0.2"
+base64 = "0.13"
