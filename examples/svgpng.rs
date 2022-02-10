@@ -8,13 +8,29 @@ fn png_from_qr(code: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
 }
 
 fn svg_from_png(svg: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
-    let enc = base64::encode(svg);
-    Ok(enc)
+    let data = base64::encode(svg);
+    let width = "51mm";
+    let height = "51mm";
+    let x = "0mm";
+    let y = "0mm";
+    let svg = include_str!("../data/base64.svg")
+        .replace("{width}", width)
+        .replace("{height}", height)
+        .replace("{x}", x)
+        .replace("{y}", y)
+        .replace("{data}", &data);
+    Ok(svg)
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let png = png_from_qr("BlubdiWupp")?;
+    let code = std::env::args()
+        .next()
+        .map(|a| a.to_string())
+        .unwrap_or("blubdiasdf asdfasdf asdf".into());
+    let png = png_from_qr(&code)?;
     std::fs::write("b.png", &png)?;
-    println!("{}", svg_from_png(&png)?);
+    let svg = svg_from_png(&png)?;
+    println!("{}", svg);
+    std::fs::write("b.svg", &svg)?;
     Ok(())
 }
