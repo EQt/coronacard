@@ -24,7 +24,7 @@ fn svg_from_png(svg: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let code = std::env::args()
-        .next()
+        .last()
         .map(|a| a.to_string())
         .unwrap_or("blubdiasdf asdfasdf asdf".into());
     let png = png_from_qr(&code)?;
