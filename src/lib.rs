@@ -54,7 +54,7 @@ pub fn card_with_templ(code: &str, pdf: bool, templ: String) -> Result<Vec<u8>, 
     let vac = Vacc::parse(code).map_err(Error::Vacc)?;
     let qrsvg = gen_qr_code(code).map_err(Error::GenQr)?;
     let templ = vac.to_svg(templ);
-    let templ: String = svg::replace_rect(templ, &qrsvg).map_err(Error::GenSvg)?;
+    let templ: String = svg::replace_rect_with_str(templ, &qrsvg).map_err(Error::GenSvg)?;
     Ok(if pdf {
         svg::to_pdf(&templ).map_err(Error::GenPdf)?
     } else {
