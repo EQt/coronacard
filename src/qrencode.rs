@@ -1,20 +1,38 @@
+fn get_boxed_err(msg: &str) -> Box<dyn std::error::Error> {
+    None::<()>.ok_or(msg).unwrap_err().into()
+}
+
 /// Set svg attributes.
 /// - `x`
 /// - `y`
 /// - `width`
 /// - `height`
 fn fix_svg_header(svg: &str) -> Result<String, QrEncErr> {
+    assert!(
+        svg.contains("xlink:href"),
+        "fix_svg_header: svg={}",
+        &svg[..300]
+    );
     let mut xml =
         xmltree::Element::parse(svg.as_bytes()).map_err(|e| QrEncErr::QrSvgParse(Box::new(e)))?;
     xml.attributes.insert("x".into(), "0mm".into());
     xml.attributes.insert("y".into(), "0mm".into());
     xml.attributes.insert("width".into(), "53mm".into());
     xml.attributes.insert("height".into(), "53mm".into());
+    if let Some(img) = xml.get_mut_child("image") {
+        let href = img
+            .attributes
+            .remove("href")
+            .ok_or(QrEncErr::QrSvgParse(get_boxed_err("href not found")))?;
+        let attr = &mut img.attributes;
+        attr.insert("xlink:href".into(), href);
+        dbg!(attr.keys());
+    }
     let mut out = Vec::new();
     xml.write_with_config(
         &mut out,
         xmltree::EmitterConfig::new()
-            .write_document_declaration(false)
+            .write_document_declaration(true)
             .perform_indent(true),
     )
     .map_err(|_| QrEncErr::XmlWriteErr)?;
