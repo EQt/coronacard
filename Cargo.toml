@@ -17,7 +17,6 @@ pdf = ["svg2pdf", "usvg", "fontdb", "arial"]
 xmltree = "0.10"
 clap = { version = "3.0", default-features = false, features = ["color", "derive", "std"], optional = true }
 image = { version = "0.24", default-features = false, features = ["png", "jpeg"] }
-qrcode = { version = "0.12", default-features = false, features = ["svg"] }
 rqrr = { version = "0.4", default-features = false }
 usvg = { version = "0.20", default-features = false, optional = true, features = ["text"] }
 
@@ -25,6 +24,7 @@ usvg = { version = "0.20", default-features = false, optional = true, features =
 default-features = false
 optional = true
 git = "https://github.com/EQt/svg2pdf.git"
+features = ["png"]
 
 [dependencies.greenpass]
 git = "https://github.com/mcilloni/greenpass.git"
@@ -34,6 +34,9 @@ default-features = false
 version = "0.7"
 optional = true
 default-features = false
+
+[dependencies.qrenc]
+path = "qrenc"
 
 [dependencies.arial]
 path = "arial"
