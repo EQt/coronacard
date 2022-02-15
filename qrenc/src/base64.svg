@@ -3,11 +3,14 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     height="{height}"
     width="{width}"
-    preserveAspectRatio="none">
-  <image image-rendering="optimizeSpeed"
-         height="{height}"
-         width="{width}"
-         x="{x}"
-         y="{y}"
-         xlink:href="data:image/png;base64,{data}"/>
+    x="{x}"
+    y="{y}"
+  >
+  <image
+      image-rendering="optimizeSpeed"
+      x="{x}"
+      y="{y}"
+      height="{height}"
+      width="{width}"
+      xlink:href="data:image/png;base64,{data}"/>
 </svg>
