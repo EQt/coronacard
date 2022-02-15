@@ -1,7 +1,7 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let code = "png -> svg";
-    let png = pdfimage::png_from_qr(&code)?;
-    let svg = pdfimage::svg_from_png(&png)?;
+    let png = qrenc::png_from_qr(&code)?;
+    let svg = qrenc::svg_from_png(&png)?;
     let opts = usvg::Options::default();
     let tree = usvg::Tree::from_str(&svg, &opts.to_ref())?;
     for node in tree.root().children() {

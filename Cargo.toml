@@ -41,7 +41,7 @@ codegen-units = 1
 opt-level = "s"
 
 [workspace]
-members = ["wasm", "arial", "pdfimage"]
+members = ["wasm", "arial", "qrenc"]
 
 [[bin]]
 name = "coronacard"
