@@ -13,7 +13,7 @@ fn svg_from_png(svg: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
     let height = "51mm";
     let x = "0mm";
     let y = "0mm";
-    let svg = include_str!("../data/base64.svg")
+    let svg = include_str!("../base64.svg")
         .replace("{width}", width)
         .replace("{height}", height)
         .replace("{x}", x)
