@@ -1,7 +1,3 @@
-fn get_boxed_err(msg: &str) -> Box<dyn std::error::Error> {
-    None::<()>.ok_or(msg).unwrap_err().into()
-}
-
 /// Set svg attributes.
 /// - `x`
 /// - `y`
@@ -19,15 +15,7 @@ fn fix_svg_header(svg: &str) -> Result<String, QrEncErr> {
     xml.attributes.insert("y".into(), "0mm".into());
     xml.attributes.insert("width".into(), "53mm".into());
     xml.attributes.insert("height".into(), "53mm".into());
-    if let Some(img) = xml.get_mut_child("image") {
-        let href = img
-            .attributes
-            .remove("href")
-            .ok_or(QrEncErr::QrSvgParse(get_boxed_err("href not found")))?;
-        let attr = &mut img.attributes;
-        attr.insert("xlink:href".into(), href);
-        dbg!(attr.keys());
-    }
+    crate::svg::fix_href(&mut xml);
     let mut out = Vec::new();
     xml.write_with_config(
         &mut out,

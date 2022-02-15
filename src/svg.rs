@@ -16,6 +16,17 @@ pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     Ok(pdf)
 }
 
+pub(crate) fn fix_href(xml: &mut xmltree::Element) {
+    if let Some(img) = xml.get_mut_child("image") {
+        if let Some(href) = img
+            .attributes
+            .remove("href") {
+                img.attributes.insert("xlink:href".into(), href);
+            }
+        dbg!(img.attributes.keys());
+    }
+}
+
 #[cfg(not(feature = "pdf"))]
 pub fn to_pdf(_svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     None.ok_or("For --pdf re-compile with feature \"pdf\" enabled!")?;
@@ -32,6 +43,7 @@ fn replace_rect_elem(e: &mut xmltree::Element, xqr: &xmltree::Element) {
                 e.attributes.insert("viewBox".into(), vb.into());
             }
             e.children = xqr.children.clone();
+            fix_href(e)
         }
     } else {
         replace_rect_rec(e, xqr);
