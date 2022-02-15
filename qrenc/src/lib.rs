@@ -21,3 +21,9 @@ pub fn svg_from_png(png: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
         .replace("{data}", &data);
     Ok(svg)
 }
+
+pub fn svg_from_qr(qr: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let png = png_from_qr(qr)?;
+    let svg = svg_from_png(&png)?;
+    Ok(svg)
+}
