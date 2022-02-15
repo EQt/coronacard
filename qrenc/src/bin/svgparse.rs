@@ -10,7 +10,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 eprintln!("Found image {i:#?}");
                 match &i.kind {
                     usvg::ImageKind::PNG(buf) => {
-                        let buf = buf.as_ref();
                         assert_eq!(buf, &png);
                         // std::fs::write("image.png", p.as_ref())?;
                         let cursor = std::io::Cursor::new(buf);
