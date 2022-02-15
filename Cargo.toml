@@ -19,8 +19,12 @@ clap = { version = "3.0", default-features = false, features = ["color", "derive
 image = { version = "0.24", default-features = false, features = ["png", "jpeg"] }
 qrcode = { version = "0.12", default-features = false, features = ["svg"] }
 rqrr = { version = "0.4", default-features = false }
-svg2pdf = { version = "0.2", default-features = false, optional = true }
 usvg = { version = "0.20", default-features = false, optional = true, features = ["text"] }
+
+[dependencies.svg2pdf]
+default-features = false
+optional = true
+git = "https://github.com/EQt/svg2pdf.git"
 
 [dependencies.greenpass]
 git = "https://github.com/mcilloni/greenpass.git"
