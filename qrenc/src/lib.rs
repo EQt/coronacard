@@ -7,6 +7,11 @@ pub fn png_from_qr(code: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     Ok(bytes)
 }
 
+pub fn png_base64_from_qr(code: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let png = png_from_qr(code)?;
+    Ok(base64::encode(png))
+}
+
 pub fn svg_from_png(png: &[u8]) -> Result<String, Box<dyn std::error::Error>> {
     let data = base64::encode(png);
     let width = "51mm";

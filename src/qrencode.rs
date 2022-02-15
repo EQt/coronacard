@@ -15,7 +15,7 @@ fn fix_svg_header(svg: &str) -> Result<String, QrEncErr> {
         &mut out,
         xmltree::EmitterConfig::new()
             .write_document_declaration(false)
-            .perform_indent(false),
+            .perform_indent(true),
     )
     .map_err(|_| QrEncErr::XmlWriteErr)?;
     String::from_utf8(out).map_err(|_| QrEncErr::Utf8Err)

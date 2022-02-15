@@ -46,15 +46,26 @@ fn replace_rect_rec(xml: &mut xmltree::Element, xqr: &xmltree::Element) {
     });
 }
 
-pub fn replace_rect_with_str(templ: String, qr: &str) -> Result<String, Box<dyn std::error::Error>> {
+pub fn replace_rect_with_str(
+    templ: String,
+    qr: &str,
+) -> Result<String, Box<dyn std::error::Error>> {
     let xqr = xmltree::Element::parse(qr.as_bytes())?;
     replace_rect_with_xml(templ, xqr)
 }
 
-pub fn replace_rect_with_xml(templ: String, xqr: xmltree::Element) -> Result<String, Box<dyn std::error::Error>> {
+pub fn replace_rect_with_xml(
+    templ: String,
+    xqr: xmltree::Element,
+) -> Result<String, Box<dyn std::error::Error>> {
     let mut xml = xmltree::Element::parse(templ.as_bytes())?;
     replace_rect_rec(&mut xml, &xqr);
     let mut out = Vec::new();
-    xml.write(&mut out)?;
+    xml.write_with_config(
+        &mut out,
+        xmltree::EmitterConfig::new()
+            .write_document_declaration(false)
+            .perform_indent(true),
+    )?;
     Ok(String::from_utf8(out)?)
 }
