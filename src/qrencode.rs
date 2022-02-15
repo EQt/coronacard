@@ -11,11 +11,18 @@ fn fix_svg_header(svg: &str) -> Result<String, QrEncErr> {
     );
     let mut xml =
         xmltree::Element::parse(svg.as_bytes()).map_err(|e| QrEncErr::QrSvgParse(Box::new(e)))?;
-    xml.attributes.insert("x".into(), "0mm".into());
-    xml.attributes.insert("y".into(), "0mm".into());
-    xml.attributes.insert("width".into(), "53mm".into());
-    xml.attributes.insert("height".into(), "53mm".into());
+
+    let set_dimensions = |xml: &mut xmltree::Element| {
+        xml.attributes.insert("x".into(), "0mm".into());
+        xml.attributes.insert("y".into(), "0mm".into());
+        xml.attributes.insert("width".into(), "53mm".into());
+        xml.attributes.insert("height".into(), "53mm".into());
+    };
+    set_dimensions(&mut xml);
     crate::svg::fix_href(&mut xml);
+    if let Some(img) = xml.get_mut_child("image") {
+        set_dimensions(img);
+    }
     let mut out = Vec::new();
     xml.write_with_config(
         &mut out,
