@@ -17,7 +17,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let decoded =
                             image::io::Reader::with_format(cursor, image::ImageFormat::Png)
                                 .decode()?;
-                        dbg!(decoded);
+                        // eprintln!("img = {decoded:?}");
+                        let color = decoded.color();
+                        dbg!(color.has_color());
+                        dbg!(color.bits_per_pixel());
+                        dbg!(color.channel_count());
+                        let bits = color.bits_per_pixel();
+                        let channels = color.channel_count() as u16;
+                        dbg!(bits / channels > 8);
+                        let img_rgb = decoded.to_rgb8();
+                        let pixel = img_rgb.pixels().collect::<Vec<_>>();
+                        dbg!(&pixel[251..255]);
+                        let image_bytes: Vec<u8> = pixel.iter().flat_map(|&image::Rgb(c)| c).cloned().collect();
+                        dbg!(&image_bytes[251*3 .. 255 * 3]);
                     }
                     k => eprintln!("ignoring image type {k:?}"),
                 }
