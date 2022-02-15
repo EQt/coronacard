@@ -17,7 +17,7 @@ pub fn default_a4_template() -> String {
 
 pub enum Error {
     Vacc(vacc::VaccErr),
-    GenQr(qrencode::QrEncErr),
+    GenQr(Box<dyn std::error::Error>),
     GenSvg(Box<dyn std::error::Error>),
     GenPdf(Box<dyn std::error::Error>),
 }
@@ -43,7 +43,7 @@ impl std::error::Error for Error {
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             Error::Vacc(e) => Some(e),
-            Error::GenQr(e) => Some(e),
+            Error::GenQr(e) => Some(e.as_ref()),
             Error::GenSvg(e) => Some(e.as_ref()),
             Error::GenPdf(e) => Some(e.as_ref()),
         }
