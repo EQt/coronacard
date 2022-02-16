@@ -34,7 +34,11 @@ pub fn gen_card(img: &[u8], din_a4: bool, pdf: bool) -> Result<File, JsValue> {
     match coronacard::card_with_templ(&code, pdf, templ) {
         Ok(card) => Ok(File {
             content: card,
-            mimetype: if pdf { "application/pdf" } else { "image/svg+xml" },
+            mimetype: if pdf {
+                "application/pdf"
+            } else {
+                "image/svg+xml"
+            },
         }),
         Err(e) => Err(format!("{e}").into()),
     }

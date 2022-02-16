@@ -27,9 +27,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let img_rgb = decoded.to_rgb8();
                         let pixel = img_rgb.pixels().collect::<Vec<_>>();
                         dbg!(&pixel[251..255]);
-                        let image_bytes: Vec<u8> = pixel.iter().flat_map(|&image::Rgb(c)| c).cloned().collect();
-                        dbg!(&image_bytes[251*3 .. 255 * 3]);
-                        let compressed = miniz_oxide::deflate::compress_to_vec_zlib(&image_bytes, 8);
+                        let image_bytes: Vec<u8> =
+                            pixel.iter().flat_map(|&image::Rgb(c)| c).cloned().collect();
+                        dbg!(&image_bytes[251 * 3..255 * 3]);
+                        let compressed =
+                            miniz_oxide::deflate::compress_to_vec_zlib(&image_bytes, 8);
                         std::fs::write("compressed.gzip", &compressed)?;
                     }
                     k => eprintln!("ignoring image type {k:?}"),
