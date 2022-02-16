@@ -1,5 +1,8 @@
-<svg height="297mm" viewBox="0 0 793.70081 1122.5197" width="210mm" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(196.53544 125.66929)" font-family="Arial">
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="297mm" viewBox="0 0 793.70081 1122.5197" width="210mm">
+  <defs>
+    <g id="side" font-family="Arial">
       <rect id="@qr" fill="#111" height="53mm" width="53mm" x="0mm" y="0mm"/>
       <g font-size="8">
         <text x="53.422554" y="207.35767"><tspan>Scan mit CovPassCheck-App</tspan></text>
@@ -25,30 +28,7 @@
         <path d="m200.31496 315.59056v37.79528"/>
       </g>
     </g>
-    <g transform="translate(396.9754 125.66929)" font-family="Arial">
-      <rect id="@qr" fill="#111" height="53mm" width="53mm" x="0mm" y="0mm"/>
-      <g font-size="8">
-        <text x="53.422554" y="207.35767"><tspan>Scan mit CovPassCheck-App</tspan></text>
-        <text x="10.507" y="231.23"><tspan>Name</tspan></text>
-        <text x="11.243" y="268.45999"><tspan>Letzte Impfung/</tspan><tspan x="11.243" y="278.45999">Last Vaccination</tspan></text>
-        <text x="104.06" y="229.83"><tspan>Geburtstag/Date of Birth</tspan></text>
-        <text x="124.08" y="268.45999"><tspan>Anzahl Impfungen/</tspan><tspan x="124.08" y="278.45999">Number of Doses</tspan></text>
-      </g>
-      <g font-weight="bold">
-        <text font-size="11" x="11.107" y="246.58"><tspan>@name</tspan></text>
-        <g font-size="12">
-          <text text-anchor="end" x="191.5" y="246.58"><tspan x="191.5" y="246.58">@birth</tspan></text>
-          <text x="11.519" y="296.26001"><tspan x="11.519" y="296.26001">@lastvacc</tspan></text>
-          <text text-anchor="end" x="188.89" y="295.78"><tspan x="188.89" y="295.78">@dose</tspan></text>
-        </g>
-      </g>
-      <g fill="none" stroke="#000" stroke-width=".25">
-        <path d="m0-5.6692924v-37.7952756"/>
-        <path d="m200.31496-5.6692924v-37.7952756"/>
-        <path d="m205.98426 0h37.79528"/>
-        <path d="m0 315.59056v37.79528"/>
-        <path d="m200.31496 315.59056v37.79528"/>
-        <path d="m205.98426 309.92126h37.79528"/>
-      </g>
-  </g>
+  </defs>
+  <use xlink:href="#side" x="196.5354" y="125.66929"/>
+  <use xlink:href="#side" x="396.9754" y="125.66929"/>
 </svg>
