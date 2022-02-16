@@ -18,12 +18,9 @@ pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
 
 pub(crate) fn fix_href(xml: &mut xmltree::Element) {
     if let Some(img) = xml.get_mut_child("image") {
-        if let Some(href) = img
-            .attributes
-            .remove("href") {
-                img.attributes.insert("xlink:href".into(), href);
-            }
-        dbg!(img.attributes.keys());
+        if let Some(href) = img.attributes.remove("href") {
+            img.attributes.insert("xlink:href".into(), href);
+        }
     }
 }
 
