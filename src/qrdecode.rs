@@ -58,7 +58,5 @@ fn decode_qr_image(img: &image::DynamicImage) -> Result<String, QrErr> {
 
 /// Try to detect QR code in an image.
 pub fn qr_from_img(buf: &[u8]) -> Result<String, QrErr> {
-    decode_qr_image(
-        &image::load_from_memory(buf).map_err(|e| QrErr::ImageRead(format!("{e:?}")))?,
-    )
+    decode_qr_image(&image::load_from_memory(buf).map_err(|e| QrErr::ImageRead(format!("{e:?}")))?)
 }
