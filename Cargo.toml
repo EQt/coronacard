@@ -18,12 +18,13 @@ xmltree = "0.10"
 clap = { version = "3.0", default-features = false, features = ["color", "derive", "std"], optional = true }
 image = { version = "0.24", default-features = false, features = ["png", "jpeg"] }
 rqrr = { version = "0.4", default-features = false }
-usvg = { version = "0.20", default-features = false, optional = true, features = ["text"] }
+usvg = { version = "0.21", default-features = false, optional = true, features = ["text"] }
 
 [dependencies.svg2pdf]
 default-features = false
 optional = true
 git = "https://github.com/EQt/svg2pdf.git"
+branch = "image_viewport"
 features = ["png"]
 
 [dependencies.greenpass]
@@ -31,7 +32,7 @@ git = "https://github.com/mcilloni/greenpass.git"
 default-features = false
 
 [dependencies.fontdb]
-version = "0.7"
+version = "0.8"
 optional = true
 default-features = false
 
