@@ -7,4 +7,4 @@ description = "Find the systems's Arial true-type font files."
 license = "MIT"
 
 [build-dependencies]
-fontdb = { version = "0.7.0", default-features = false, features = ["fs"] }
+fontdb = { version = "0.8", default-features = false, features = ["fs"] }
