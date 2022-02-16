@@ -7,9 +7,9 @@
       <g font-size="8">
         <text x="53.422554" y="207.35767"><tspan>Scan mit CovPassCheck-App</tspan></text>
         <text x="10.507" y="231.23"><tspan>Name</tspan></text>
-        <text x="11.243" y="268.45999"><tspan>Letzte Impfung/</tspan><tspan x="11.243" y="278.45999">Last Vaccination</tspan></text>
+        <text x="11.243" y="268.46"><tspan>Letzte Impfung/</tspan><tspan x="11.243" y="278.46">Last Vaccination</tspan></text>
         <text x="104.06" y="229.83"><tspan>Geburtstag/Date of Birth</tspan></text>
-        <text x="124.08" y="268.45999"><tspan>Anzahl Impfungen/</tspan><tspan x="124.08" y="278.45999">Number of Doses</tspan></text>
+        <text x="124.08" y="268.46"><tspan>Anzahl Impfungen/</tspan><tspan x="124.08" y="278.46">Number of Doses</tspan></text>
       </g>
       <g font-weight="bold">
         <text font-size="11" x="11.107" y="246.58"><tspan>@name</tspan></text>
