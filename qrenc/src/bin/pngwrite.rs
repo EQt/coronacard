@@ -5,7 +5,11 @@ fn png_from_qr(_: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         encoder.set_color(png::ColorType::Grayscale);
         encoder.set_depth(png::BitDepth::One);
         let mut writer = encoder.write_header()?;
-        let data: Vec<_> = [255; 11].iter().enumerate().map(|(i, p)| p >> i.min(7)).collect();
+        let data: Vec<_> = [255; 11]
+            .iter()
+            .enumerate()
+            .map(|(i, p)| p >> i.min(7))
+            .collect();
         writer.write_image_data(&data).unwrap(); // Save
     }
     Ok(buf)
