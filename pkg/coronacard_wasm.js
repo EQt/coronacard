@@ -69,14 +69,15 @@ function takeObject(idx) {
 /**
 * @param {Uint8Array} img
 * @param {boolean} din_a4
+* @param {boolean} pdf
 * @returns {File}
 */
-export function gen_svg(img, din_a4) {
+export function gen_card(img, din_a4, pdf) {
     try {
         const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
         var ptr0 = passArray8ToWasm0(img, wasm.__wbindgen_malloc);
         var len0 = WASM_VECTOR_LEN;
-        wasm.gen_svg(retptr, ptr0, len0, din_a4);
+        wasm.gen_card(retptr, ptr0, len0, din_a4, pdf);
         var r0 = getInt32Memory0()[retptr / 4 + 0];
         var r1 = getInt32Memory0()[retptr / 4 + 1];
         var r2 = getInt32Memory0()[retptr / 4 + 2];

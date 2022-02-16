@@ -1,4 +1,4 @@
-import init, {gen_svg} from "./pkg/coronacard_wasm.js";
+import init, {gen_card} from "./pkg/coronacard_wasm.js";
 
 init();
 
@@ -34,9 +34,11 @@ export function convert() {
             }
         }).then(function (bytesArr) {
             console.log(`run wasm (${selectedFile})`);
-            const f = gen_svg(bytesArr, true);
+            const is_pdf = true;
+            const din_a4 = true;
+            const f = gen_card(bytesArr, din_a4, is_pdf);
             const blob = new Blob([f.content()], { type: f.mimetype() });
-            const output_filename = "corona_card.pdf";
+            const output_filename = is_pdf ? "corona_card.pdf" : "corona_card.svg";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
             convertButtonElement.innerHTML = "Convert";
