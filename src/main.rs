@@ -45,7 +45,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| Ok(coronacard::default_template()))?;
     eprint!("{vac:#?}");
     let templ = vac.to_svg(svg_templ);
-    let templ: String = coronacard::svg::replace_rect_with_str(templ, &qr)?;
+    let templ: String =
+        coronacard::svg::replace_rect_with_str(templ, &qr)?.replace(" href=\"", " xlink:href=\"");
     std::fs::write(&args.out, &templ)?;
     eprintln!(" => {:?}", &args.out);
     if args.pdf {
