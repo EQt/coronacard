@@ -1,12 +1,12 @@
 [package]
 name = "coronacard"
-version = "0.1.3"
+version = "0.2.0"
 authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
 license = "MIT"
 edition = "2021"
 exclude = ["/data", "!/data/print.svg", "!/data/template.svg", ".gitmodules"]
 repository = "https://github.com/EQt/coronacard"
-description = "Format corona \"greencard\" information using an SVG template."
+description = "Generate card proving vaccination."
 
 [features]
 default = ["cli", "pdf"]
