@@ -10,9 +10,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 eprintln!("Found image {i:#?}");
                 match &i.kind {
                     usvg::ImageKind::PNG(buf) => {
-                        assert_eq!(buf, &png);
+                        assert_eq!(buf.as_ref(), &png);
                         // std::fs::write("image.png", p.as_ref())?;
-                        let cursor = std::io::Cursor::new(buf);
+                        let cursor = std::io::Cursor::new(buf.as_ref());
                         let decoded =
                             image::io::Reader::with_format(cursor, image::ImageFormat::Png)
                                 .decode()?;
