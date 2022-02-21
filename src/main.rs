@@ -42,7 +42,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .template
         .as_ref()
         .map(std::fs::read_to_string)
-        .unwrap_or_else(|| Ok(coronacard::default_template()))?;
+        .unwrap_or_else(|| {
+            Ok(if args.din_a4 {
+                coronacard::default_a4_template()
+            } else {
+                coronacard::default_template()
+            })
+        })?;
     eprint!("{vac:#?}");
     let templ = vac.to_svg(svg_templ);
     let templ: String =
