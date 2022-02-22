@@ -1,6 +1,6 @@
 import init, {gen_card, version} from "./pkg/coronacard_wasm.js";
 
-const wasm = await init();
+await init();
 
 export const wasm_version = () => "v" + version();
 
