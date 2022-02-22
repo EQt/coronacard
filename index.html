@@ -22,16 +22,17 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content rounded-5 shadow">
             <div class="modal-header p-4 pb-4 border-bottom-0">
-              <h2 class="fw-bold mb-0">Generate Corona Card</h2>
+              <h2 class="fw-bold mb-0">Corona Card Generator</h2>
             </div>
 
             <div class="modal-body p-4 pt-2">
               <div class="mb-3">
-                <label for="formFile" class="form-label">Image to extract QR code</label>
+                <label id="fileLabel" for="formFile" class="form-label"></label>
                 <input class="form-control" type="file" id="formFile" accept="image/png, image/jpeg">
               </div>
               <fieldset>
-                <label for="outputFormat" class="col-sm-2 col-form-label col-form-label">Output</label>
+                <label id="outputLabel" for="outputFormat"
+                       class="col-sm-2 col-form-label col-form-label"></label>
                 <div class="form-check form-check-inline" id="outputFormat">
                   <input type="radio" name="format" id="pdfRadio" class="form-check-input" value="pdf" checked="true">
                   <label class="form-check-label" for="pdfRadio">PDF</label>
@@ -43,7 +44,8 @@
               </fieldset>
               <div>
                 <fieldset>
-                  <label for="outputFormat" class="col-sm-2 col-form-label col-form-label">Size</label>
+                  <label id="sizeLabel" for="outputFormat"
+                         class="col-sm-2 col-form-label col-form-label"></label>
                   <div class="form-check form-check-inline" id="outputSize">
                     <input type="radio" name="size" id="dinA4" value="a4" class="form-check-input" checked="true">
                     <label class="form-check-label" for="dinA4">DIN A4</label>
