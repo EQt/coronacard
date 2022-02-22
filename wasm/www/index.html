@@ -66,6 +66,7 @@
       </div>
       <footer class="d-flex flex-wrap justify-content-between align-items-center border-top p-1">
         <p class="col-md-4 mb-0 text-muted p-1">© 2022 Elias Kuthe</p>
+        <p class="col-md-4 mb-0 text-muted p-1" id="version">Version</p>
         <ul class="nav col-md-4 justify-content-end px-2">
           <li class="nav-item">
             <a href="https://github.com/EQt/coronacard" class="nav-link">Github</a>
@@ -74,10 +75,10 @@
       </footer>
     </div>
     <script type="module">
-      import { convert, updateInputField } from "./index.js";
+      import { convert, updateInputField, wasm_version } from "./index.js";
       window.convert = convert;
       window.updateInputField = updateInputField;
-      console.log("imported ./js/script.js");
+      document.getElementById("version").innerHTML = wasm_version();
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

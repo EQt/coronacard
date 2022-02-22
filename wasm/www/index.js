@@ -1,6 +1,8 @@
-import init, {gen_card} from "./pkg/coronacard_wasm.js";
+import init, {gen_card, version} from "./pkg/coronacard_wasm.js";
 
-init();
+const wasm = await init();
+
+export const wasm_version = () => "v" + version();
 
 // adapted from https://stackoverflow.com/a/45831280
 function download(blob, filename) {
