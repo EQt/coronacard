@@ -17,6 +17,10 @@ body,html {
     color: black !important;
 }
 
+.nav-link {
+    color: black !important;
+}
+
 .border-top {
     border-top-color: black !important;
 }
