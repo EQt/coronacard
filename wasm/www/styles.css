@@ -24,3 +24,27 @@ body,html {
 .border-top {
     border-top-color: black !important;
 }
+
+label#outputLabel::before {
+    content: "Output";
+}
+
+label#outputLabel:lang(de)::before {
+    content: "Ausgabeformat";
+}
+
+label#sizeLabel::before {
+    content: "Size";
+}
+
+label#sizeLabel:lang(de)::before {
+    content: "Ausgabeformat";
+}
+
+label#fileLabel::before {
+    content: "Photo/Screenshot of corona certificate QR-code"
+}
+
+label#fileLabel:lang(de)::before {
+    content: "Foto/Screenshot des QR-Codes vom Corona-Zertifikat";
+}
