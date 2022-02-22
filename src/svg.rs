@@ -1,5 +1,6 @@
 #[cfg(feature = "pdf")]
 pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    let dpi = 96.0;  // currently the only working value
     let fontdb = {
         let mut db = fontdb::Database::new();
         db.load_font_data(arial::regular_ttf());
@@ -9,12 +10,12 @@ pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     };
     let usvg_opts = usvg::Options {
         fontdb,
-        dpi: 96.0,
+        dpi,
         ..Default::default()
     };
     let tree = usvg::Tree::from_str(svg, &usvg_opts.to_ref())?;
     let opts = svg2pdf::Options {
-        dpi: 72.0,
+        dpi,
         ..Default::default()
     };
     let pdf = svg2pdf::convert_tree(&tree, opts);
