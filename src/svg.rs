@@ -9,6 +9,7 @@ pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
     };
     let options = usvg::Options {
         fontdb,
+        dpi: 72.0,
         ..Default::default()
     };
     let tree = usvg::Tree::from_str(svg, &options.to_ref())?;
