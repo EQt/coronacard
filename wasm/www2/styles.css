@@ -12,3 +12,11 @@ body,html {
     background-color: #db6e00;
     border-color: #d67d22;
 }
+
+.text-muted {
+    color: black !important;
+}
+
+.border-top {
+    border-top-color: black !important;
+}
