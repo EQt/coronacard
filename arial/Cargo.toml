@@ -1,10 +1,10 @@
 [package]
 name = "arial"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Elias Kuthe <elias.kuthe@tu-dortmund.de>"]
 description = "Find the systems's Arial true-type font files."
 license = "MIT"
 
 [build-dependencies]
-fontdb = { version = "0.8", default-features = false, features = ["fs"] }
+fontdb = { version = "0.9", default-features = false, features = ["fs"] }
