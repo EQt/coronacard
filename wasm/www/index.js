@@ -33,9 +33,9 @@ export function convert() {
                 resolve(new Uint8Array(e.target.result));
             }
         }).then(function (bytesArr) {
-            console.log(`run wasm (${selectedFile})`);
-            const is_pdf = true;
-            const din_a4 = true;
+            const is_pdf = document.getElementsByName("format")[0].checked;
+            const din_a4 = document.getElementsByName("size")[0].checked;
+            console.log(`run wasm (${selectedFile}, is_pdf=${is_pdf}, din_a4=${din_a4})`);
             const f = gen_card(bytesArr, din_a4, is_pdf);
             const blob = new Blob([f.content()], { type: f.mimetype() });
             const output_filename = is_pdf ? "corona_card.pdf" : "corona_card.svg";
