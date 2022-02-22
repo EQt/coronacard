@@ -43,3 +43,8 @@ pub fn gen_card(img: &[u8], din_a4: bool, pdf: bool) -> Result<File, JsValue> {
         Err(e) => Err(format!("{e}").into()),
     }
 }
+
+#[wasm_bindgen]
+pub fn version() -> String {
+    env!("CARGO_PKG_VERSION").into()
+}
