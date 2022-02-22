@@ -7,13 +7,17 @@ pub fn to_pdf(svg: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         assert_eq!(db.len(), 2);
         db
     };
-    let options = usvg::Options {
+    let usvg_opts = usvg::Options {
         fontdb,
+        dpi: 96.0,
+        ..Default::default()
+    };
+    let tree = usvg::Tree::from_str(svg, &usvg_opts.to_ref())?;
+    let opts = svg2pdf::Options {
         dpi: 72.0,
         ..Default::default()
     };
-    let tree = usvg::Tree::from_str(svg, &options.to_ref())?;
-    let pdf = svg2pdf::convert_tree(&tree, svg2pdf::Options::default());
+    let pdf = svg2pdf::convert_tree(&tree, opts);
     Ok(pdf)
 }
 
