@@ -1,23 +1,22 @@
 body,html {
     height: 100%;
-    background-color: #e8ac5d;
+    background-color: #cf8a4a;
 }
+
+.modal-content {
+    background-color: #fcd288;
+}
+
 .btn-primary {
     color: #212529;
     background-color: #db6e00;
     border-color: #d67d22;
 }
 
-.bg-light {
-  background-color: #ffe7b3 !important;
+.text-muted {
+    color: black !important;
 }
 
-#formContainer {
-    max-width: 400px;
-    width: 95%;
-    min-width: 330px;
-}
-
-.custom-file-input ~ .custom-file-label::after {
-    content: "Choose File" !important;
+.border-top {
+    border-top-color: black !important;
 }

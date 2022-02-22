@@ -16,16 +16,16 @@ function download(blob, filename) {
 
 export function convert() {
     console.log("Convert button pressed!");
-    let convertButtonElement = document.getElementById('convertButton');
-    let selectedFile = document.getElementById('imageInputFile').files[0];
+    const convertButtonElement = document.getElementById("convertButton");
+    const convertLabel = convertButtonElement.innerHTML;
+    const selectedFile = document.getElementById("formFile").files[0];
     console.log(`Selected file: ${selectedFile}`);
     if (selectedFile === undefined) {
         alert("Please select your file first!");
         return;
     } else {
-        convertButtonElement.innerHTML = 'Computing...';
+        convertButtonElement.innerHTML = "Computing...";
         const fileData = new Blob([selectedFile]);
-
         new Promise(function (resolve) {
             let reader = new FileReader();
             reader.readAsArrayBuffer(fileData);
@@ -41,11 +41,11 @@ export function convert() {
             const output_filename = is_pdf ? "corona_card.pdf" : "corona_card.svg";
             console.log("Showing SaveAs dialog to the user...");
             download(blob, output_filename);
-            convertButtonElement.innerHTML = "Convert";
+            convertButtonElement.innerHTML = convertLabel;
         }).catch(function (err) {
             console.log(err);
             alert(`Error: ${err}`)
-            convertButtonElement.innerHTML = "Convert";
+            convertButtonElement.innerHTML = convertLabel;
         });
         console.log("Done!")
     }
