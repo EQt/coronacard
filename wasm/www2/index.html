@@ -23,12 +23,25 @@
             <div class="modal-header p-4 pb-4 border-bottom-0">
               <h2 class="fw-bold mb-0">Generate Corona Card</h2>
             </div>
+            
             <div class="modal-body p-4 pt-2">
               <div class="mb-3">
                 <label for="formFile" class="form-label">Image to extract QR code</label>
                 <input class="form-control" type="file" id="formFile">
               </div>
+              <div>
+                <label for="outputFormat" class="col-sm-2 col-form-label col-form-label">Output</label>
+                <div class="form-check form-check-inline" id="outputFormat">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="pdf" checked>
+                  <label class="form-check-label" for="inlineRadio1">PDF</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="svg">
+                  <label class="form-check-label" for="inlineRadio2">SVG</label>
+                </div>
+              </div>
             </div>
+
             <div class="modal-footer border-top-0 p-4 pt-0">
               <button type="button" onClick="convert()" id="convertButton"
                  class="btn btn-primary btn-lg btn-block">Generate</button>
