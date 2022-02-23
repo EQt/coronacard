@@ -4,7 +4,7 @@ version = "0.1.2"
 edition = "2021"
 
 [dependencies]
-qrcode-png = { git = "https://github.com/EQt/qrcode-png.git", branch = "bitmap" }
+qrcode-png = { version = "0.3" }
 base64 = "0.13"
 
 [dev-dependencies]
