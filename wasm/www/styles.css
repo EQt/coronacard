@@ -19,6 +19,7 @@ body,html {
 
 .nav-link {
     color: black !important;
+    display: inline-block !important;
 }
 
 .border-top {
@@ -47,4 +48,11 @@ label#fileLabel::before {
 
 label#fileLabel:lang(de)::before {
     content: "Foto/Screenshot des QR-Codes vom Corona-Zertifikat";
+}
+
+img#logo {
+    margin:20px 0px;
+    width: 50%;
+    max-width: 300px;
+    min-width: 200px;
 }
