@@ -3,7 +3,7 @@ pub fn png_from_qr(code: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
 
     let mut qr = QrCode::new(code, qrcode_png::QrCodeEcc::Low)?;
     qr.margin(5);
-    let bytes = qr.generate(qrcode_png::Grayscale::default())?;
+    let bytes = qr.generate(qrcode_png::Bitmap::default())?;
     Ok(bytes)
 }
 
